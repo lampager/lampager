@@ -1,4 +1,13 @@
-# Lampager Core  [![Build Status](https://travis-ci.org/lampager/core.svg?branch=master)](https://travis-ci.org/lampager/core) [![Coverage Status](https://coveralls.io/repos/github/lampager/core/badge.svg?branch=master)](https://coveralls.io/github/lampager/core?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lampager/core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lampager/core/?branch=master)
+<p align="center">
+<img width="280" alt="lampager" src="https://user-images.githubusercontent.com/1351893/31754281-a36010cc-b4d1-11e7-8371-851f5faa3785.png">
+</p>
+<p align="center">
+<a href="https://travis-ci.org/lampager/core"><img src="https://travis-ci.org/lampager/core.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/lampager/core?branch=master"><img src="https://coveralls.io/repos/github/lampager/core/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://scrutinizer-ci.com/g/lampager/core/?branch=master"><img src="https://scrutinizer-ci.com/g/lampager/core/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
+</p>
+
+# Lampager Core
 
 The core package of Lampager
 
