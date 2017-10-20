@@ -2,9 +2,9 @@
 <img width="280" alt="lampager" src="https://user-images.githubusercontent.com/1351893/31754281-a36010cc-b4d1-11e7-8371-851f5faa3785.png">
 </p>
 <p align="center">
-<a href="https://travis-ci.org/lampager/core"><img src="https://travis-ci.org/lampager/core.svg?branch=master" alt="Build Status"></a>
-<a href="https://coveralls.io/github/lampager/core?branch=master"><img src="https://coveralls.io/repos/github/lampager/core/badge.svg?branch=master" alt="Coverage Status"></a>
-<a href="https://scrutinizer-ci.com/g/lampager/core/?branch=master"><img src="https://scrutinizer-ci.com/g/lampager/core/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
+<a href="https://travis-ci.org/lampager/lampager"><img src="https://travis-ci.org/lampager/lampager.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/lampager/lampager?branch=master"><img src="https://coveralls.io/repos/github/lampager/lampager/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://scrutinizer-ci.com/g/lampager/lampager/?branch=master"><img src="https://scrutinizer-ci.com/g/lampager/lampager/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
 </p>
 
 # Lampager Core
@@ -18,13 +18,13 @@ The core package of Lampager
 ## Installing
 
 ```bash
-composer require lampager/core:^0.1.0
+composer require lampager/lampager:^0.1.0
 ```
 
 ## Usage
 
 Basically you don't need to directly use this package.
-For example, if you uses Laravel, install [lampager/laravel](https://github.com/lampager/laravel).
+For example, if you uses Laravel, install [lampager/lampager-laravel](https://github.com/lampager/lampager-laravel).
 
 However, you can use manually like this:
 
@@ -462,7 +462,7 @@ IlluminateProcessor::setDefaultFormatter(function ($rows, array $meta, Query $qu
 
    // Note:
    //    $builder is provided from extended Paginator.
-   //    For example, lampager/laravel provides QueryBuilder, EloquentBuilder or Relation.
+   //    For example, lampager/lampager-laravel provides QueryBuilder, EloquentBuilder or Relation.
    $builder = $query->builder();
 
    switch ($builder instanceof Builder ? $builder->getModel() : null) {

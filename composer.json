@@ -1,5 +1,5 @@
 {
-    "name": "lampager/core",
+    "name": "lampager/lampager",
     "description": "Rapid pagination without using OFFSET",
     "type": "library",
     "license": "MIT",
