@@ -5,7 +5,7 @@ namespace Lampager\Tests\Query;
 use Lampager\ArrayCursor;
 use Lampager\Query\Direction;
 use Lampager\Query\Order;
-use Lampager\Query\Query;
+use Lampager\Query;
 use Lampager\Query\SelectOrUnionAll;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 

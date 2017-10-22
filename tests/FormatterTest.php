@@ -3,7 +3,7 @@
 namespace Lampager\Tests;
 
 use Lampager\ArrayProcessor;
-use Lampager\Query\Query;
+use Lampager\Query;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class FormatterTest extends BaseTestCase

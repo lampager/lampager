@@ -2,7 +2,7 @@
 
 namespace Lampager\Contracts;
 
-use Lampager\Query\Query;
+use Lampager\Query;
 
 /**
  * Interface Formatter

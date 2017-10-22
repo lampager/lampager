@@ -4,7 +4,7 @@ namespace Lampager\Concerns;
 
 use Lampager\Contracts\Formatter;
 use Lampager\AbstractProcessor;
-use Lampager\Query\Query;
+use Lampager\Query;
 
 trait HasProcessor
 {
