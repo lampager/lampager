@@ -2,7 +2,7 @@
 
 namespace Lampager\Query;
 
-use Lampager\Cursor;
+use Lampager\Contracts\Cursor;
 use Lampager\ArrayCursor;
 
 /**

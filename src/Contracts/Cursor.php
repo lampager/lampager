@@ -1,6 +1,6 @@
 <?php
 
-namespace Lampager;
+namespace Lampager\Contracts;
 
 /**
  * Interface Cursor
