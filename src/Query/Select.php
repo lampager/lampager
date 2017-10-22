@@ -54,16 +54,6 @@ class Select extends SelectOrUnionAll
     }
 
     /**
-     * An alias of where().
-     *
-     * @return ConditionGroup[]
-     */
-    public function conditionGroups()
-    {
-        return $this->where;
-    }
-
-    /**
      * @return Order[]
      */
     public function orders()

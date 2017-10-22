@@ -182,17 +182,4 @@ class SelectOrUnionAllTest extends BaseTestCase
         $this->assertNotSame($supportQuery->where(), $cloneSupportQuery->where());
         $this->assertSame($supportQuery->where()[0]->conditions()[0]->comparator(), $cloneSupportQuery->where()[0]->conditions()[0]->comparator());
     }
-
-    /**
-     * @test
-     */
-    public function testAliasMethod()
-    {
-        $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
-        $direction = new Direction(Direction::FORWARD);
-        $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
-
-        $select = SelectOrUnionAll::create($orders, $cursor, new Limit(10), $direction, false, false);
-        $this->assertSame($select->where(), $select->conditionGroups());
-    }
 }
