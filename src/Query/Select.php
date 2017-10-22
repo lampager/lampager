@@ -100,10 +100,10 @@ class Select extends SelectOrUnionAll
     /**
      * Retrieve an external iterator.
      *
-     * @return \Generator|Select[]
+     * @return \ArrayIterator|Select[]
      */
     public function getIterator()
     {
-        yield $this;
+        return new \ArrayIterator([$this]);
     }
 }

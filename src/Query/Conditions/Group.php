@@ -100,12 +100,10 @@ class Group implements \IteratorAggregate
     /**
      * Retrieve an external iterator.
      *
-     * @return Condition[]|\Generator
+     * @return \ArrayIterator|Condition[]
      */
     public function getIterator()
     {
-        foreach ($this->conditions as $i => $condition) {
-            yield $i => $condition;
-        }
+        return new \ArrayIterator($this->conditions);
     }
 }

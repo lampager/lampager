@@ -100,12 +100,10 @@ class Where implements \IteratorAggregate
     /**
      * Retrieve an external iterator.
      *
-     * @return \Generator|Group[]
+     * @return \ArrayIterator|Group[]
      */
     public function getIterator()
     {
-        foreach ($this->groups as $i => $group) {
-            yield $i => $group;
-        }
+        return new \ArrayIterator($this->groups);
     }
 }
