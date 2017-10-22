@@ -19,7 +19,7 @@ abstract class SelectOrUnionAll implements \IteratorAggregate
     public static function create(array $orders, array $cursor, Limit $limit, Direction $direction, $exclusive, $seekable)
     {
         $mainQuery = new Select(
-            $cursor ? Where::create($orders, $cursor, $direction, $exclusive) : null,
+            $cursor ? ConditionGroup::createMany($orders, $cursor, $direction, $exclusive) : [],
             $direction->backward()
                 ? array_map(static function (Order $order) {
                     return $order->inverse();

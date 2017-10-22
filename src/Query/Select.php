@@ -8,7 +8,7 @@ namespace Lampager\Query;
 class Select extends SelectOrUnionAll
 {
     /**
-     * @var null|Where
+     * @var ConditionGroup[]
      */
     protected $where;
 
@@ -25,11 +25,11 @@ class Select extends SelectOrUnionAll
     /**
      * Select constructor.
      *
-     * @param null|Where $where
-     * @param Order[]    $orders
-     * @param Limit      $limit
+     * @param ConditionGroup[] $where
+     * @param Order[]          $orders
+     * @param Limit            $limit
      */
-    public function __construct($where, array $orders, Limit $limit)
+    public function __construct(array $where, array $orders, Limit $limit)
     {
         $this->where = $where;
         $this->orders = static::validate(...$orders);
@@ -46,7 +46,7 @@ class Select extends SelectOrUnionAll
     }
 
     /**
-     * @return null|Where
+     * @return ConditionGroup[]
      */
     public function where()
     {
@@ -75,7 +75,9 @@ class Select extends SelectOrUnionAll
     public function inverse()
     {
         return new static(
-            $this->where ? $this->where->inverse() : null,
+            array_map(static function (ConditionGroup $group) {
+                return $group->inverse();
+            }, $this->where),
             array_map(static function (Order $order) {
                 return $order->inverse();
             }, $this->orders),
@@ -88,9 +90,9 @@ class Select extends SelectOrUnionAll
      */
     public function __clone()
     {
-        if ($this->where) {
-            $this->where = clone $this->where;
-        }
+        $this->where = array_map(static function (ConditionGroup $group) {
+            return clone $group;
+        }, $this->where);
         $this->orders = array_map(static function (Order $order) {
             return clone $order;
         }, $this->orders);

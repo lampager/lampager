@@ -3,11 +3,10 @@
 namespace Lampager\Tests\Query\Conditions;
 
 use Codeception\Specify;
-use Lampager\Query\Conditions\Condition;
-use Lampager\Query\Conditions\Group;
+use Lampager\Query\Condition;
+use Lampager\Query\ConditionGroup;
 use Lampager\Query\Direction;
 use Lampager\Query\Order;
-use Lampager\Query\Where;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class WhereConditionsTest extends BaseTestCase
@@ -26,14 +25,13 @@ class WhereConditionsTest extends BaseTestCase
     }
 
     /**
-     * @param  Where         $where
+     * @param  ConditionGroup[] $groups
      * @return Condition[][]
      */
-    protected function castWhereToArray(Where $where)
+    protected function castWhereToArray(array $groups)
     {
         $r = [];
-        $groups = $where->groups();
-        foreach ($where as $i => $group) {
+        foreach ($groups as $i => $group) {
             $this->assertSame($group, $groups[$i]);
             $conditions = $group->conditions();
             foreach ($group as $j => $condition) {
@@ -124,10 +122,10 @@ class WhereConditionsTest extends BaseTestCase
     {
         $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
 
-        $supportWhere = Where::create($this->inverseOrderArray($orders), $cursor, $direction, false, true);
+        $supportGroups = ConditionGroup::createMany($this->inverseOrderArray($orders), $cursor, $direction, false, true);
 
-        $this->specify('support query assertion', function () use ($supportWhere) {
-            $where = $this->castWhereToArray($supportWhere);
+        $this->specify('support query assertion', function () use ($supportGroups) {
+            $where = $this->castWhereToArray($supportGroups);
 
             $this->assertCondition($where[0][0], 'updated_at', '=', '2017-01-01 18:00:00');
             $this->assertCondition($where[0][1], 'created_at', '=', '2017-01-01 12:00:00');
@@ -144,10 +142,10 @@ class WhereConditionsTest extends BaseTestCase
             $this->assertArrayNotHasKey(3, $where);
         });
 
-        $mainWhere = Where::create($orders, $cursor, $direction, false);
+        $mainGroups = ConditionGroup::createMany($orders, $cursor, $direction, false);
 
-        $this->specify('main query assertion', function () use ($mainWhere) {
-            $where = $this->castWhereToArray($mainWhere);
+        $this->specify('main query assertion', function () use ($mainGroups) {
+            $where = $this->castWhereToArray($mainGroups);
 
             $this->assertCondition($where[0][0], 'updated_at', '=', '2017-01-01 18:00:00');
             $this->assertCondition($where[0][1], 'created_at', '=', '2017-01-01 12:00:00');
@@ -164,9 +162,13 @@ class WhereConditionsTest extends BaseTestCase
             $this->assertArrayNotHasKey(3, $where);
         });
 
-        $this->specify('manually constructed inverse Where is equivalent to auto-generaed one', function () use ($mainWhere, $supportWhere) {
-            $this->assertEquals($mainWhere, $supportWhere->inverse());
-            $this->assertEquals($supportWhere, $mainWhere->inverse());
+        $this->specify('manually constructed inverse condition groups are equivalent to auto-generated ones', function () use ($mainGroups, $supportGroups) {
+            $this->assertEquals($mainGroups, array_map(static function (ConditionGroup $group) {
+                return clone $group->inverse();
+            }, $supportGroups));
+            $this->assertEquals($supportGroups, array_map(static function (ConditionGroup $group) {
+                return clone $group->inverse();
+            }, $mainGroups));
         });
     }
 
@@ -186,10 +188,10 @@ class WhereConditionsTest extends BaseTestCase
     {
         $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
 
-        $supportWhere = Where::create($this->inverseOrderArray($orders), $cursor, $direction, true, true);
+        $supportGroups = ConditionGroup::createMany($this->inverseOrderArray($orders), $cursor, $direction, true, true);
 
-        $this->specify('support query assertion', function () use ($supportWhere) {
-            $where = $this->castWhereToArray($supportWhere);
+        $this->specify('support query assertion', function () use ($supportGroups) {
+            $where = $this->castWhereToArray($supportGroups);
 
             $this->assertCondition($where[0][0], 'updated_at', '=', '2017-01-01 18:00:00');
             $this->assertCondition($where[0][1], 'created_at', '=', '2017-01-01 12:00:00');
@@ -206,10 +208,10 @@ class WhereConditionsTest extends BaseTestCase
             $this->assertArrayNotHasKey(3, $where);
         });
 
-        $mainWhere = Where::create($orders, $cursor, $direction, true);
+        $mainGroups = ConditionGroup::createMany($orders, $cursor, $direction, true);
 
-        $this->specify('main query assertion', function () use ($mainWhere) {
-            $where = $this->castWhereToArray($mainWhere);
+        $this->specify('main query assertion', function () use ($mainGroups) {
+            $where = $this->castWhereToArray($mainGroups);
 
             $this->assertCondition($where[0][0], 'updated_at', '=', '2017-01-01 18:00:00');
             $this->assertCondition($where[0][1], 'created_at', '=', '2017-01-01 12:00:00');
@@ -226,9 +228,13 @@ class WhereConditionsTest extends BaseTestCase
             $this->assertArrayNotHasKey(3, $where);
         });
 
-        $this->specify('manually constructed inverse Where is equivalent to auto-generaed one', function () use ($mainWhere, $supportWhere) {
-            $this->assertEquals($mainWhere, $supportWhere->inverse());
-            $this->assertEquals($supportWhere, $mainWhere->inverse());
+        $this->specify('manually constructed inverse condition groups are equivalent to auto-generated ones', function () use ($mainGroups, $supportGroups) {
+            $this->assertEquals($mainGroups, array_map(static function (ConditionGroup $group) {
+                return clone $group->inverse();
+            }, $supportGroups));
+            $this->assertEquals($supportGroups, array_map(static function (ConditionGroup $group) {
+                return clone $group->inverse();
+            }, $mainGroups));
         });
     }
 
@@ -248,10 +254,10 @@ class WhereConditionsTest extends BaseTestCase
     {
         $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
 
-        $supportWhere = Where::create($this->inverseOrderArray($orders), $cursor, $direction, false, true);
+        $supportGroups = ConditionGroup::createMany($this->inverseOrderArray($orders), $cursor, $direction, false, true);
 
-        $this->specify('support query assertion', function () use ($supportWhere) {
-            $where = $this->castWhereToArray($supportWhere);
+        $this->specify('support query assertion', function () use ($supportGroups) {
+            $where = $this->castWhereToArray($supportGroups);
 
             $this->assertCondition($where[0][0], 'updated_at', '=', '2017-01-01 18:00:00');
             $this->assertCondition($where[0][1], 'created_at', '=', '2017-01-01 12:00:00');
@@ -268,10 +274,10 @@ class WhereConditionsTest extends BaseTestCase
             $this->assertArrayNotHasKey(3, $where);
         });
 
-        $mainWhere = Where::create($orders, $cursor, $direction, false);
+        $mainGroups = ConditionGroup::createMany($orders, $cursor, $direction, false);
 
-        $this->specify('main query assertion', function () use ($mainWhere) {
-            $where = $this->castWhereToArray($mainWhere);
+        $this->specify('main query assertion', function () use ($mainGroups) {
+            $where = $this->castWhereToArray($mainGroups);
 
             $this->assertCondition($where[0][0], 'updated_at', '=', '2017-01-01 18:00:00');
             $this->assertCondition($where[0][1], 'created_at', '=', '2017-01-01 12:00:00');
@@ -288,9 +294,13 @@ class WhereConditionsTest extends BaseTestCase
             $this->assertArrayNotHasKey(3, $where);
         });
 
-        $this->specify('manually constructed inverse Where is equivalent to auto-generaed one', function () use ($mainWhere, $supportWhere) {
-            $this->assertEquals($mainWhere, $supportWhere->inverse());
-            $this->assertEquals($supportWhere, $mainWhere->inverse());
+        $this->specify('manually constructed inverse condition groups are equivalent to auto-generated ones', function () use ($mainGroups, $supportGroups) {
+            $this->assertEquals($mainGroups, array_map(static function (ConditionGroup $group) {
+                return clone $group->inverse();
+            }, $supportGroups));
+            $this->assertEquals($supportGroups, array_map(static function (ConditionGroup $group) {
+                return clone $group->inverse();
+            }, $mainGroups));
         });
     }
 
@@ -310,10 +320,10 @@ class WhereConditionsTest extends BaseTestCase
     {
         $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
 
-        $supportWhere = Where::create($this->inverseOrderArray($orders), $cursor, $direction, true, true);
+        $supportGroups = ConditionGroup::createMany($this->inverseOrderArray($orders), $cursor, $direction, true, true);
 
-        $this->specify('support query assertion', function () use ($supportWhere) {
-            $where = $this->castWhereToArray($supportWhere);
+        $this->specify('support query assertion', function () use ($supportGroups) {
+            $where = $this->castWhereToArray($supportGroups);
 
             $this->assertCondition($where[0][0], 'updated_at', '=', '2017-01-01 18:00:00');
             $this->assertCondition($where[0][1], 'created_at', '=', '2017-01-01 12:00:00');
@@ -330,10 +340,10 @@ class WhereConditionsTest extends BaseTestCase
             $this->assertArrayNotHasKey(3, $where);
         });
 
-        $mainWhere = Where::create($orders, $cursor, $direction, true);
+        $mainGroups = ConditionGroup::createMany($orders, $cursor, $direction, true);
 
-        $this->specify('main query assertion', function () use ($mainWhere) {
-            $where = $this->castWhereToArray($mainWhere);
+        $this->specify('main query assertion', function () use ($mainGroups) {
+            $where = $this->castWhereToArray($mainGroups);
 
             $this->assertCondition($where[0][0], 'updated_at', '=', '2017-01-01 18:00:00');
             $this->assertCondition($where[0][1], 'created_at', '=', '2017-01-01 12:00:00');
@@ -350,9 +360,13 @@ class WhereConditionsTest extends BaseTestCase
             $this->assertArrayNotHasKey(3, $where);
         });
 
-        $this->specify('manually constructed inverse Where is equivalent to auto-generaed one', function () use ($mainWhere, $supportWhere) {
-            $this->assertEquals($mainWhere, $supportWhere->inverse());
-            $this->assertEquals($supportWhere, $mainWhere->inverse());
+        $this->specify('manually constructed inverse condition groups are equivalent to auto-generated ones', function () use ($mainGroups, $supportGroups) {
+            $this->assertEquals($mainGroups, array_map(static function (ConditionGroup $group) {
+                return clone $group->inverse();
+            }, $supportGroups));
+            $this->assertEquals($supportGroups, array_map(static function (ConditionGroup $group) {
+                return clone $group->inverse();
+            }, $mainGroups));
         });
     }
 
@@ -386,7 +400,7 @@ class WhereConditionsTest extends BaseTestCase
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);
         $cursor = ['id' => 10, 'updated_at' => '2017-01-01 18:00:00'];
-        Group::create($orders, $cursor, $direction, false, true, false);
+        ConditionGroup::create($orders, $cursor, $direction, false, true, false);
     }
 
     /**
@@ -395,18 +409,14 @@ class WhereConditionsTest extends BaseTestCase
     public function testDeepClone()
     {
         $condition = new Condition('id', '>=', 10, true);
-        $group = new Group([$condition]);
-        $where = new Where([$group]);
+        $group = new ConditionGroup([$condition]);
 
-        $cloneWhere = clone $where;
-        $cloneGroup = $cloneWhere->groups()[0];
+        $cloneGroup = clone $group;
         $cloneCondition = $cloneGroup->conditions()[0];
 
         $this->assertEquals($condition, $cloneCondition);
         $this->assertNotSame($condition, $cloneCondition);
         $this->assertEquals($group, $cloneGroup);
         $this->assertNotSame($condition, $cloneCondition);
-        $this->assertEquals($where, $cloneWhere);
-        $this->assertNotSame($where, $cloneWhere);
     }
 }

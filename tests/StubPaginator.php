@@ -68,7 +68,7 @@ class StubPaginator extends Paginator
     protected function compileWhere(Select $select)
     {
         $ors = [];
-        foreach ($select->where() ?: [] as $group) {
+        foreach ($select->where() as $group) {
             $ands = [];
             foreach ($group as $condition) {
                 $ands[] = "{$condition->left()} {$condition->comparator()} ?";

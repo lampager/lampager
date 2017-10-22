@@ -138,9 +138,9 @@ class SelectOrUnionAllTest extends BaseTestCase
         $this->assertNotSame($mainQuery->orders()[0], $supportQuery->orders()[0]);
         $this->assertSame($mainQuery->limit()->original(), $supportQuery->limit()->original());
         $this->assertNotSame($mainQuery->limit()->toInteger(), $supportQuery->limit()->toInteger());
-        $this->assertSame($mainQuery->where()->groups()[0]->conditions()[0]->comparator(), $supportQuery->where()->groups()[0]->conditions()[0]->comparator());
-        $this->assertSame($mainQuery->where()->groups()[0]->conditions()[1]->comparator(), $supportQuery->where()->groups()[0]->conditions()[1]->comparator());
-        $this->assertNotSame($mainQuery->where()->groups()[0]->conditions()[2]->comparator(), $supportQuery->where()->groups()[0]->conditions()[2]->comparator());
+        $this->assertSame($mainQuery->where()[0]->conditions()[0]->comparator(), $supportQuery->where()[0]->conditions()[0]->comparator());
+        $this->assertSame($mainQuery->where()[0]->conditions()[1]->comparator(), $supportQuery->where()[0]->conditions()[1]->comparator());
+        $this->assertNotSame($mainQuery->where()[0]->conditions()[2]->comparator(), $supportQuery->where()[0]->conditions()[2]->comparator());
     }
 
     /**
@@ -169,7 +169,7 @@ class SelectOrUnionAllTest extends BaseTestCase
         $this->assertSame($mainQuery->limit()->toInteger(), $cloneMainQuery->limit()->toInteger());
 
         $this->assertNotSame($mainQuery->where(), $cloneMainQuery->where());
-        $this->assertSame($mainQuery->where()->groups()[0]->conditions()[0]->comparator(), $cloneMainQuery->where()->groups()[0]->conditions()[0]->comparator());
+        $this->assertSame($mainQuery->where()[0]->conditions()[0]->comparator(), $cloneMainQuery->where()[0]->conditions()[0]->comparator());
 
         $this->assertNotSame($supportQuery, $cloneSupportQuery);
         $this->assertNotSame($supportQuery->orders()[0], $cloneSupportQuery->orders()[0]);
@@ -180,6 +180,6 @@ class SelectOrUnionAllTest extends BaseTestCase
         $this->assertSame($supportQuery->limit()->toInteger(), $cloneSupportQuery->limit()->toInteger());
 
         $this->assertNotSame($supportQuery->where(), $cloneSupportQuery->where());
-        $this->assertSame($supportQuery->where()->groups()[0]->conditions()[0]->comparator(), $cloneSupportQuery->where()->groups()[0]->conditions()[0]->comparator());
+        $this->assertSame($supportQuery->where()[0]->conditions()[0]->comparator(), $cloneSupportQuery->where()[0]->conditions()[0]->comparator());
     }
 }
