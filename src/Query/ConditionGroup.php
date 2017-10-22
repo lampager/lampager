@@ -2,6 +2,9 @@
 
 namespace Lampager\Query;
 
+use Lampager\Cursor;
+use Lampager\ArrayCursor;
+
 /**
  * Class ConditionGroup
  *
@@ -15,14 +18,14 @@ class ConditionGroup implements \IteratorAggregate
     protected $conditions = [];
 
     /**
-     * @param  Order[]        $orders
-     * @param  int[]|string[] $cursor
-     * @param  Direction      $direction
-     * @param  bool           $exclusive
-     * @param  bool           $isSupportQuery
+     * @param  Order[]               $orders
+     * @param  Cursor|int[]|string[] $cursor
+     * @param  Direction             $direction
+     * @param  bool                  $exclusive
+     * @param  bool                  $isSupportQuery
      * @return static[]
      */
-    public static function createMany(array $orders, array $cursor, Direction $direction, $exclusive, $isSupportQuery = false)
+    public static function createMany(array $orders, $cursor, Direction $direction, $exclusive, $isSupportQuery = false)
     {
         $groups = [];
         $count = count($orders);
@@ -49,28 +52,29 @@ class ConditionGroup implements \IteratorAggregate
     }
 
     /**
-     * @param  Order[]        $orders
-     * @param  int[]|string[] $cursor
-     * @param  Direction      $direction
-     * @param  bool           $exclusive
-     * @param  bool           $hasPrimaryKey
-     * @param  bool           $isSupportQuery
+     * @param  Order[]               $orders
+     * @param  Cursor|int[]|string[] $cursor
+     * @param  Direction             $direction
+     * @param  bool                  $exclusive
+     * @param  bool                  $hasPrimaryKey
+     * @param  bool                  $isSupportQuery
      * @return static
      */
-    public static function create(array $orders, array $cursor, Direction $direction, $exclusive, $hasPrimaryKey, $isSupportQuery = false)
+    public static function create(array $orders, $cursor, Direction $direction, $exclusive, $hasPrimaryKey, $isSupportQuery = false)
     {
         $conditions = [];
         $i = 0;
         $count = count($orders);
+        $cursor = $cursor instanceof Cursor ? $cursor : new ArrayCursor($cursor);
         foreach ($orders as $order) {
-            if (!isset($cursor[$order->column()])) {
+            if (!$cursor->has($order->column())) {
                 // All parameters must be specified.
                 throw new \UnexpectedValueException("Missing cursor parameter: {$order->column()}");
             }
             $isLastKey = ++$i === $count;
             $conditions[] = Condition::create(
                 $order,
-                $cursor[$order->column()],
+                $cursor->get($order->column()),
                 $direction,
                 $exclusive,
                 $isLastKey && $hasPrimaryKey, // When it is the last key and we have a primary key, it is also the primary key.

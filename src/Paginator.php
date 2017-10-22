@@ -160,10 +160,10 @@ class Paginator
     /**
      * Build Query instance.
      *
-     * @param  int[]|string[] $cursor
+     * @param  Cursor|int[]|string[] $cursor
      * @return Query
      */
-    public function configure(array $cursor = [])
+    public function configure($cursor = [])
     {
         return Query::create($this->orders, $cursor, $this->limit, $this->backward, $this->exclusive, $this->seekable, $this->builder);
     }

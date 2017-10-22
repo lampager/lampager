@@ -2,6 +2,8 @@
 
 namespace Lampager\Query;
 
+use Lampager\Cursor;
+
 /**
  * Class SelectOrUnionAll
  */
@@ -9,14 +11,14 @@ abstract class SelectOrUnionAll implements \IteratorAggregate
 {
     /**
      * @param  Order[]                $orders
-     * @param  int[]|string[]         $cursor
+     * @param  Cursor|int[]|string[]  $cursor
      * @param  Limit                  $limit
      * @param  Direction              $direction
      * @param  bool                   $exclusive
      * @param  bool                   $seekable
      * @return Select|static|UnionAll
      */
-    public static function create(array $orders, array $cursor, Limit $limit, Direction $direction, $exclusive, $seekable)
+    public static function create(array $orders, $cursor, Limit $limit, Direction $direction, $exclusive, $seekable)
     {
         $mainQuery = new Select(
             $cursor ? ConditionGroup::createMany($orders, $cursor, $direction, $exclusive) : [],
