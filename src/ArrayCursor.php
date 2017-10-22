@@ -2,6 +2,8 @@
 
 namespace Lampager;
 
+use Lampager\Contracts\Cursor;
+
 /**
  * Default implementation for Cursor
  */

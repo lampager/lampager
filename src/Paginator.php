@@ -2,6 +2,7 @@
 
 namespace Lampager;
 
+use Lampager\Contracts\Cursor;
 use Lampager\Query\Order;
 use Lampager\Query\Query;
 
