@@ -1,9 +1,14 @@
 <?php
 
-namespace Lampager\Query;
+namespace Lampager;
 
 use Lampager\Contracts\Cursor;
-use Lampager\ArrayCursor;
+use Lampager\Query\Direction;
+use Lampager\Query\Limit;
+use Lampager\Query\Order;
+use Lampager\Query\Select;
+use Lampager\Query\SelectOrUnionAll;
+use Lampager\Query\UnionAll;
 
 /**
  * Class Query

@@ -3,7 +3,6 @@
 namespace Lampager;
 
 use Lampager\Contracts\Formatter;
-use Lampager\Query\Query;
 use Lampager\Query\UnionAll;
 
 /**

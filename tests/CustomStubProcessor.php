@@ -3,7 +3,7 @@
 namespace Lampager\Tests;
 
 use Lampager\ArrayProcessor;
-use Lampager\Query\Query;
+use Lampager\Query;
 
 class CustomStubProcessor extends ArrayProcessor
 {

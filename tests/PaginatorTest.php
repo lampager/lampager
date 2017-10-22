@@ -4,7 +4,7 @@ namespace Lampager\Tests;
 
 use Lampager\Paginator;
 use Lampager\Query\Order;
-use Lampager\Query\Query;
+use Lampager\Query;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class PaginatorTest extends BaseTestCase
