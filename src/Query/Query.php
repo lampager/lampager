@@ -2,6 +2,9 @@
 
 namespace Lampager\Query;
 
+use Lampager\Cursor;
+use Lampager\ArrayCursor;
+
 /**
  * Class Query
  */
@@ -18,7 +21,7 @@ class Query
     protected $orders;
 
     /**
-     * @var int[]|string[]
+     * @var Cursor
      */
     protected $cursor;
 
@@ -48,16 +51,16 @@ class Query
     protected $builder;
 
     /**
-     * @param  string[][]     $orders
-     * @param  int[]|string[] $cursor
-     * @param  int            $limit
-     * @param  bool           $backward
-     * @param  bool           $exclusive
-     * @param  bool           $seekable
-     * @param  mixed          $builder
+     * @param  string[][]            $orders
+     * @param  Cursor|int[]|string[] $cursor
+     * @param  int                   $limit
+     * @param  bool                  $backward
+     * @param  bool                  $exclusive
+     * @param  bool                  $seekable
+     * @param  mixed                 $builder
      * @return static
      */
-    public static function create(array $orders, array $cursor, $limit, $backward, $exclusive, $seekable, $builder = null)
+    public static function create(array $orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder = null)
     {
         if (!$orders) {
             throw new \OutOfRangeException('At least one order constraint required');
@@ -74,18 +77,18 @@ class Query
      *
      * @param Select|SelectOrUnionAll|UnionAll $selectOrUnionAll
      * @param Order[]                          $orders
-     * @param int[]|string[]                   $cursor
+     * @param Cursor|int[]|string[]            $cursor
      * @param Limit                            $limit
      * @param Direction                        $direction
      * @param bool                             $exclusive
      * @param bool                             $seekable
      * @param mixed                            $builder
      */
-    public function __construct(SelectOrUnionAll $selectOrUnionAll, array $orders, array $cursor, Limit $limit, Direction $direction, $exclusive, $seekable, $builder = null)
+    public function __construct(SelectOrUnionAll $selectOrUnionAll, array $orders, $cursor, Limit $limit, Direction $direction, $exclusive, $seekable, $builder = null)
     {
         $this->selectOrUnionAll = $selectOrUnionAll;
         $this->orders = $orders;
-        $this->cursor = $cursor;
+        $this->cursor = $cursor instanceof Cursor ? $cursor : new ArrayCursor($cursor);
         $this->limit = $limit->original();
         $this->direction = $direction;
         $this->exclusive = $exclusive;
@@ -110,7 +113,7 @@ class Query
     }
 
     /**
-     * @return array
+     * @return Cursor
      */
     public function cursor()
     {

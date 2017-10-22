@@ -2,6 +2,7 @@
 
 namespace Lampager\Tests\Query;
 
+use Lampager\ArrayCursor;
 use Lampager\Query\Direction;
 use Lampager\Query\Order;
 use Lampager\Query\Query;
@@ -16,7 +17,7 @@ class QueryTest extends BaseTestCase
     public function testConstruction()
     {
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
-        $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
+        $cursor = new ArrayCursor(['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00']);
         $limit = 30;
         $backward = true;
         $exclusive = true;

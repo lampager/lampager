@@ -186,7 +186,7 @@ abstract class AbstractProcessor
 
             // Retrieve values
             $field = $this->field($first, $order->column());
-            $cursor = $query->cursor()[$order->column()];
+            $cursor = $query->cursor()->get($order->column());
 
             // Compare the first row and the cursor
             if (!$diff = $this->compareField($field, $cursor)) {
