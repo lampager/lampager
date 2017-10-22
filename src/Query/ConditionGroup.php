@@ -1,16 +1,13 @@
 <?php
 
-namespace Lampager\Query\Conditions;
-
-use Lampager\Query\Direction;
-use Lampager\Query\Order;
+namespace Lampager\Query;
 
 /**
- * Class Group
+ * Class ConditionGroup
  *
  * Conditions are concatenated with "AND".
  */
-class Group implements \IteratorAggregate
+class ConditionGroup implements \IteratorAggregate
 {
     /**
      * @var Condition[]
@@ -22,11 +19,45 @@ class Group implements \IteratorAggregate
      * @param  int[]|string[] $cursor
      * @param  Direction      $direction
      * @param  bool           $exclusive
+     * @param  bool           $isSupportQuery
+     * @return static[]
+     */
+    public static function createMany(array $orders, array $cursor, Direction $direction, $exclusive, $isSupportQuery = false)
+    {
+        $groups = [];
+        $count = count($orders);
+        for ($i = 0; $i < $count; ++$i) {
+            /*
+             * Slice orders for building conditions.
+             *
+             * e.g.
+             *
+             *    1st:  updated_at = ? AND created_at = ? AND id > ?
+             *    2nd:  updated_at = ? AND created_at > ?
+             *    3rd:  updated_at > ?
+             */
+            $groups[] = static::create(
+                array_slice($orders, 0, $count - $i),
+                $cursor,
+                $direction,
+                $exclusive,
+                $i === 0, // First row has a primary key
+                $isSupportQuery
+            );
+        }
+        return $groups;
+    }
+
+    /**
+     * @param  Order[]        $orders
+     * @param  int[]|string[] $cursor
+     * @param  Direction      $direction
+     * @param  bool           $exclusive
      * @param  bool           $hasPrimaryKey
      * @param  bool           $isSupportQuery
      * @return static
      */
-    public static function create(array $orders, array $cursor, Direction $direction, $exclusive, $hasPrimaryKey, $isSupportQuery)
+    public static function create(array $orders, array $cursor, Direction $direction, $exclusive, $hasPrimaryKey, $isSupportQuery = false)
     {
         $conditions = [];
         $i = 0;

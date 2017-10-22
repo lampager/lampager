@@ -1,9 +1,6 @@
 <?php
 
-namespace Lampager\Query\Conditions;
-
-use Lampager\Query\Direction;
-use Lampager\Query\Order;
+namespace Lampager\Query;
 
 /**
  * Class Condition
