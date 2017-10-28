@@ -23,9 +23,17 @@ class ArrayCursor implements Cursor
     /**
      * {@inheritdoc}
      */
-    public function has($column)
+    public function has(...$columns)
     {
-        return isset($this->cursor[$column]);
+        if (empty($this->cursor)) {
+            return null;
+        }
+        foreach ($columns as $column) {
+            if (!isset($this->cursor[$column])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
