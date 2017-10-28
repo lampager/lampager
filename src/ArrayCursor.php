@@ -29,7 +29,7 @@ class ArrayCursor implements Cursor
             return null;
         }
         foreach ($columns as $column) {
-            if (!isset($this->cursor[$column])) {
+            if (!array_key_exists($column, $this->cursor)) {
                 return false;
             }
         }
