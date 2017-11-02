@@ -94,66 +94,72 @@ class Paginator
     /**
      * Define that the current pagination is going forward.
      *
+     * @param  bool  $forward
      * @return $this
      */
-    public function forward()
+    public function forward($forward = true)
     {
-        $this->backward = false;
+        $this->backward = !$forward;
         return $this;
     }
 
     /**
      * Define that the current pagination is going backward.
      *
+     * @param  bool  $backward
      * @return $this
      */
-    public function backward()
+    public function backward($backward = true)
     {
-        $this->backward = true;
+        $this->backward = $backward;
         return $this;
     }
 
     /**
      * Define that the cursor value is not included in the previous/next result.
      *
+     * @param  bool  $exclusive
      * @return $this
      */
-    public function exclusive()
+    public function exclusive($exclusive = true)
     {
-        $this->exclusive = true;
+        $this->exclusive = $exclusive;
         return $this;
     }
 
     /**
      * Define that the cursor value is included in the previous/next result.
      *
+     * @param  bool  $inclusive
      * @return $this
      */
-    public function inclusive()
+    public function inclusive($inclusive = true)
     {
-        $this->exclusive = false;
+        $this->exclusive = !$inclusive;
         return $this;
     }
 
     /**
      * Define that the query can detect both "has_previous" and "has_next".
      *
+     * @param  bool  $seekable
      * @return $this
      */
-    public function seekable()
+    public function seekable($seekable = true)
     {
-        $this->seekable = true;
+        $this->seekable = $seekable;
         return $this;
     }
 
     /**
      * Define that the query can detect only either "has_previous" or "has_next".
      *
+     * @param  bool  $unseekable
      * @return $this
      */
-    public function unseekable()
+    public function unseekable($unseekable = true)
     {
-        $this->seekable = false;
+        $this->seekable = !$unseekable;
         return $this;
     }
 
