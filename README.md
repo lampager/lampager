@@ -323,6 +323,23 @@ Define that the pagination result should contain both of the next cursor and the
                   └ next cursor
 ```
 
+### Paginator::fromArray()
+
+Define options from an associative array.
+
+```php
+Paginator::fromArray(array $options): $this
+```
+
+#### Arguments
+
+- **`(array)`** __*$options*__<br> Associative array that contains the following keys.
+  - **`(int)`** __*limit*__
+  - **`(bool)`** __*backward*__ / __*forward*__
+  - **`(bool)`** __*exclusive*__ / __*inclusive*__
+  - **`(bool)`** __*seekable*__ / __*unseekable*__
+  - **`(string[])`** __*$orders*__
+
 ### Paginator::configure()
 
 Generate Query corresponding to the current cursor.
