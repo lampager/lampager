@@ -18,7 +18,7 @@ The core package of Lampager
 ## Installing
 
 ```bash
-composer require lampager/lampager:^0.1.0
+composer require lampager/lampager:^0.2.1
 ```
 
 ## Usage
