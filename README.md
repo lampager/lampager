@@ -483,6 +483,6 @@ IlluminateProcessor::setDefaultFormatter(function ($rows, array $meta, Query $qu
    }
 });
 
-$posts = Post::lampage()->orderBy('created_at')->orderBy('id')->paginate();
-$comments = Comment::lampage()->orderBy('created_at')->orderBy('id')->paginate();
+$posts = Post::lampager()->orderBy('created_at')->orderBy('id')->paginate();
+$comments = Comment::lampager()->orderBy('created_at')->orderBy('id')->paginate();
 ```
