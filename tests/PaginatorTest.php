@@ -53,8 +53,14 @@ class PaginatorTest extends BaseTestCase
         $paginator->backward();
         $this->assertTrue($paginator->backward);
 
+        $paginator->backward(false);
+        $this->assertFalse($paginator->backward);
+
         $paginator->forward();
         $this->assertFalse($paginator->backward);
+
+        $paginator->forward(false);
+        $this->assertTrue($paginator->backward);
     }
 
     /**
@@ -68,8 +74,14 @@ class PaginatorTest extends BaseTestCase
         $paginator->exclusive();
         $this->assertTrue($paginator->exclusive);
 
+        $paginator->exclusive(false);
+        $this->assertFalse($paginator->exclusive);
+
         $paginator->inclusive();
         $this->assertFalse($paginator->exclusive);
+
+        $paginator->inclusive(false);
+        $this->assertTrue($paginator->exclusive);
     }
 
     /**
@@ -83,8 +95,14 @@ class PaginatorTest extends BaseTestCase
         $paginator->seekable();
         $this->assertTrue($paginator->seekable);
 
+        $paginator->seekable(false);
+        $this->assertFalse($paginator->seekable);
+
         $paginator->unseekable();
         $this->assertFalse($paginator->seekable);
+
+        $paginator->unseekable(false);
+        $this->assertTrue($paginator->seekable);
     }
 
     /**
