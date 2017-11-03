@@ -338,7 +338,7 @@ Paginator::fromArray(array $options): $this
   - **`(bool)`** __*backward*__ / __*forward*__
   - **`(bool)`** __*exclusive*__ / __*inclusive*__
   - **`(bool)`** __*seekable*__ / __*unseekable*__
-  - **`(string[])`** __*$orders*__
+  - **`(string[][])`** __*$orders*__
 
 ### Paginator::configure()
 
