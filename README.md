@@ -193,8 +193,8 @@ Paginator::limit(int $limit): $this
 Define the pagination direction.
 
 ```php
-Paginator::forward(): $this
-Paginator::backward(): $this
+Paginator::forward(bool $forward = true): $this
+Paginator::backward(bool $backward = true): $this
 ```
 
 #### Forward (Default)
@@ -238,8 +238,8 @@ Paginator::backward(): $this
 ### Paginator::inclusive()<br>Paginator::exclusive()
 
 ```php
-Paginator::inclusive(): $this
-Paginator::exclusive(): $this
+Paginator::inclusive(bool $inclusive = true): $this
+Paginator::exclusive(bool $exclusive = true): $this
 ```
 
 Change the behavior of handling cursor.
@@ -286,8 +286,8 @@ Current cursor will not be included in the current page.
 ### Paginator::unseekable()<br>Paginator::seekable()
 
 ```php
-Paginator::unseekable(): $this
-Paginator::seekable(): $this
+Paginator::unseekable(bool $unseekable = true): $this
+Paginator::seekable(bool $seekable = true): $this
 ```
 
 Define that the pagination result should contain both of the next cursor and the previous cursor.
