@@ -340,6 +340,20 @@ Paginator::fromArray(array $options): $this
   - **`(bool)`** __*seekable*__ / __*unseekable*__
   - **`(string[][])`** __*$orders*__
 
+e.g.
+
+```php
+[
+    'limit' => 30,
+    'backward' => true,
+    'unseekable' => false,
+    'orders' => [
+        ['created_at', 'asc'],
+        ['id', 'asc'],
+    ],
+]
+```
+
 ### Paginator::configure()
 
 Generate Query corresponding to the current cursor.
