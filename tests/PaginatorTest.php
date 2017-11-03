@@ -108,6 +108,49 @@ class PaginatorTest extends BaseTestCase
     /**
      * @test
      */
+    public function testFromArray()
+    {
+        $paginator = new Paginator();
+        $paginator->fromArray([
+            'limit' => 20,
+            'orders' => [
+                ['foo', Order::DESC],
+                ['baz'],
+                ['bar', Order::DESC],
+            ],
+        ]);
+
+        $this->assertSame(20, $paginator->limit);
+        $this->assertSame([
+            ['foo', Order::DESC],
+            ['baz', Order::ASC],
+            ['bar', Order::DESC],
+        ], $paginator->orders);
+
+        $paginator->fromArray([
+            'forward' => true,
+            'inclusive' => true,
+            'unseekable' => true,
+        ]);
+
+        $this->assertFalse($paginator->backward);
+        $this->assertFalse($paginator->exclusive);
+        $this->assertFalse($paginator->seekable);
+
+        $paginator->fromArray([
+            'backward' => true,
+            'exclusive' => true,
+            'seekable' => true,
+        ]);
+
+        $this->assertTrue($paginator->backward);
+        $this->assertTrue($paginator->exclusive);
+        $this->assertTrue($paginator->seekable);
+    }
+
+    /**
+     * @test
+     */
     public function testConfigure()
     {
         $paginator = new Paginator();

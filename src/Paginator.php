@@ -164,6 +164,37 @@ class Paginator
     }
 
     /**
+     * Define options from an associative array.
+     *
+     * @param  (bool|int|string[])[]
+     * @return $this
+     */
+    public function fromArray(array $options)
+    {
+        static $configurables = [
+            'limit',
+            'forward',
+            'backward',
+            'exclusive',
+            'inclusive',
+            'seekable',
+            'unseekable',
+        ];
+
+        if (isset($options['orders'])) {
+            foreach ($options['orders'] as $order) {
+                $this->orderBy(...$order);
+            }
+        }
+
+        foreach (array_intersect_key($options, array_flip($configurables)) as $key => $value) {
+            $this->$key($value);
+        }
+
+        return $this;
+    }
+
+    /**
      * Build Query instance.
      *
      * @param  Cursor|int[]|string[] $cursor
