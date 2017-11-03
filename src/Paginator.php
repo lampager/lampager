@@ -166,7 +166,7 @@ class Paginator
     /**
      * Define options from an associative array.
      *
-     * @param  (bool|int|string[][])[]
+     * @param  (bool|int|string[][])[] $options
      * @return $this
      */
     public function fromArray(array $options)
