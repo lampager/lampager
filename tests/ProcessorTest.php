@@ -31,16 +31,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testAscendingForwardStartInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'next_cursor' => ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                ],
+                'has_previous' => null,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '2'],
             ],
             (new StubPaginator('posts'))
             ->forward()->limit(3)
@@ -56,16 +57,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testAscendingForwardStartExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'next_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => null,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -82,24 +84,24 @@ class ProcessorTest extends BaseTestCase
      */
     public function testAscendingForwardInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    'next_cursor' => ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '4'],
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
                 ->orderBy('updated_at')
                 ->orderBy('id')
                 ->seekable()
-                ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
+                ->paginate(['id' => '3', 'updated_at' => '2017-01-01 10:00:00'])
         );
     }
 
@@ -108,17 +110,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testAscendingForwardExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    'next_cursor' => null,
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'has_next' => false,
+                'next_cursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -126,7 +128,7 @@ class ProcessorTest extends BaseTestCase
                 ->orderBy('id')
                 ->seekable()
                 ->exclusive()
-                ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
+                ->paginate(['id' => '3', 'updated_at' => '2017-01-01 10:00:00'])
         );
     }
 
@@ -135,16 +137,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testAscendingBackwardStartInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '3'],
+                'has_next' => null,
+                'next_cursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -160,16 +163,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testAscendingBackwardStartExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'has_next' => null,
+                'next_cursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -186,23 +190,23 @@ class ProcessorTest extends BaseTestCase
      */
     public function testAscendingBackwardInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => null,
-                    'next_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => false,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
                 ->orderBy('updated_at')
                 ->orderBy('id')
                 ->seekable()
-                ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
+                ->paginate(['id' => '3', 'updated_at' => '2017-01-01 10:00:00'])
         );
     }
 
@@ -211,15 +215,15 @@ class ProcessorTest extends BaseTestCase
      */
     public function testAscendingBackwardExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => null,
-                    'next_cursor' => ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => false,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -227,7 +231,7 @@ class ProcessorTest extends BaseTestCase
                 ->orderBy('id')
                 ->seekable()
                 ->exclusive()
-                ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
+                ->paginate(['id' => '3', 'updated_at' => '2017-01-01 10:00:00'])
         );
     }
 
@@ -236,16 +240,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testDescendingForwardStartInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'next_cursor' => ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => null,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '3'],
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -261,16 +266,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testDescendingForwardStartExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'next_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => null,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -287,23 +293,23 @@ class ProcessorTest extends BaseTestCase
      */
     public function testDescendingForwardInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    'next_cursor' => null,
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'has_next' => false,
+                'next_cursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
                 ->orderByDesc('updated_at')
                 ->orderByDesc('id')
                 ->seekable()
-                ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
+                ->paginate(['id' => '3', 'updated_at' => '2017-01-01 10:00:00'])
         );
     }
 
@@ -312,15 +318,15 @@ class ProcessorTest extends BaseTestCase
      */
     public function testDescendingForwardExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                    'next_cursor' => null,
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
+                'has_next' => false,
+                'next_cursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -328,7 +334,7 @@ class ProcessorTest extends BaseTestCase
                 ->orderByDesc('id')
                 ->seekable()
                 ->exclusive()
-                ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
+                ->paginate(['id' => '3', 'updated_at' => '2017-01-01 10:00:00'])
         );
     }
 
@@ -337,16 +343,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testDescendingBackwardStartInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '2'],
+                'has_next' => null,
+                'next_cursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -362,16 +369,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testDescendingBackwardStartExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'has_next' => null,
+                'next_cursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -388,24 +396,24 @@ class ProcessorTest extends BaseTestCase
      */
     public function testDescendingBackwardInclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                    ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                    'next_cursor' => ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => true,
+                'previous_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '4'],
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
                 ->orderByDesc('updated_at')
                 ->orderByDesc('id')
                 ->seekable()
-                ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
+                ->paginate(['id' => '3', 'updated_at' => '2017-01-01 10:00:00'])
         );
     }
 
@@ -414,17 +422,17 @@ class ProcessorTest extends BaseTestCase
      */
     public function testDescendingBackwardExclusive()
     {
-        $this->assertResultEquals(
+        $this->assertResultSame(
             [
                 'records' => [
-                    ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-                    ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
+                    ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
+                    ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'meta' => [
-                    'previous_cursor' => null,
-                    'next_cursor' => ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-                ],
+                'has_previous' => false,
+                'previous_cursor' => null,
+                'has_next' => true,
+                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -432,7 +440,7 @@ class ProcessorTest extends BaseTestCase
                 ->orderByDesc('id')
                 ->seekable()
                 ->exclusive()
-                ->paginate(['id' => 3, 'updated_at' => '2017-01-01 10:00:00'])
+                ->paginate(['id' => '3', 'updated_at' => '2017-01-01 10:00:00'])
         );
     }
 }
