@@ -179,7 +179,7 @@ class Condition
     }
 
     /**
-     * @return string
+     * @return boolean
      */
     public function isPrimaryKey()
     {
