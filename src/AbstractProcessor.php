@@ -145,17 +145,14 @@ abstract class AbstractProcessor
     /**
      * Format result with default format.
      *
-     * @param  mixed $rows
-     * @param  array $meta
-     * @param  Query $query
-     * @return mixed
+     * @param  mixed            $rows
+     * @param  array            $meta
+     * @param  Query            $query
+     * @return PaginationResult
      */
     protected function defaultFormat($rows, array $meta, Query $query)
     {
-        return [
-            'records' => $rows,
-            'meta' => $meta,
-        ];
+        return new PaginationResult($rows, $meta);
     }
 
     /**
