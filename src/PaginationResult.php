@@ -15,22 +15,22 @@ class PaginationResult implements \IteratorAggregate
     /**
      * @var null|bool
      */
-    public $has_previous;
+    public $hasPrevious;
 
     /**
      * @var null|mixed
      */
-    public $previous_cursor;
+    public $previousCursor;
 
     /**
      * @var null|bool
      */
-    public $has_next;
+    public $hasNext;
 
     /**
      * @var null|mixed
      */
-    public $next_cursor;
+    public $nextCursor;
 
     /**
      * PaginationResult constructor.

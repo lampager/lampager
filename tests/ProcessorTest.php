@@ -38,10 +38,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => null,
-                'previous_cursor' => null,
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '2'],
+                'hasPrevious' => null,
+                'previousCursor' => null,
+                'hasNext' => true,
+                'nextCursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '2'],
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -64,10 +64,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => null,
-                'previous_cursor' => null,
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'hasPrevious' => null,
+                'previousCursor' => null,
+                'hasNext' => true,
+                'nextCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -91,10 +91,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'has_previous' => true,
-                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '4'],
+                'hasPrevious' => true,
+                'previousCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
+                'hasNext' => true,
+                'nextCursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '4'],
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -117,10 +117,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'has_previous' => true,
-                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
-                'has_next' => false,
-                'next_cursor' => null,
+                'hasPrevious' => true,
+                'previousCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'hasNext' => false,
+                'nextCursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -144,10 +144,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'has_previous' => true,
-                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '3'],
-                'has_next' => null,
-                'next_cursor' => null,
+                'hasPrevious' => true,
+                'previousCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '3'],
+                'hasNext' => null,
+                'nextCursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -170,10 +170,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
                 ],
-                'has_previous' => true,
-                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
-                'has_next' => null,
-                'next_cursor' => null,
+                'hasPrevious' => true,
+                'previousCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'hasNext' => null,
+                'nextCursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -196,10 +196,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => false,
-                'previous_cursor' => null,
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'hasPrevious' => false,
+                'previousCursor' => null,
+                'hasNext' => true,
+                'nextCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -220,10 +220,10 @@ class ProcessorTest extends BaseTestCase
                 'records' => [
                     ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => false,
-                'previous_cursor' => null,
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
+                'hasPrevious' => false,
+                'previousCursor' => null,
+                'hasNext' => true,
+                'nextCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -247,10 +247,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => null,
-                'previous_cursor' => null,
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '3'],
+                'hasPrevious' => null,
+                'previousCursor' => null,
+                'hasNext' => true,
+                'nextCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '3'],
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -273,10 +273,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => null,
-                'previous_cursor' => null,
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'hasPrevious' => null,
+                'previousCursor' => null,
+                'hasNext' => true,
+                'nextCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -299,10 +299,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => true,
-                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
-                'has_next' => false,
-                'next_cursor' => null,
+                'hasPrevious' => true,
+                'previousCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'hasNext' => false,
+                'nextCursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -323,10 +323,10 @@ class ProcessorTest extends BaseTestCase
                 'records' => [
                     ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => true,
-                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
-                'has_next' => false,
-                'next_cursor' => null,
+                'hasPrevious' => true,
+                'previousCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
+                'hasNext' => false,
+                'nextCursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->forward()->limit(3)
@@ -350,10 +350,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => true,
-                'previous_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '2'],
-                'has_next' => null,
-                'next_cursor' => null,
+                'hasPrevious' => true,
+                'previousCursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '2'],
+                'hasNext' => null,
+                'nextCursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -376,10 +376,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => true,
-                'previous_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
-                'has_next' => null,
-                'next_cursor' => null,
+                'hasPrevious' => true,
+                'previousCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'hasNext' => null,
+                'nextCursor' => null,
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -403,10 +403,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                     ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => true,
-                'previous_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '4'],
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
+                'hasPrevious' => true,
+                'previousCursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '4'],
+                'hasNext' => true,
+                'nextCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '1'],
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)
@@ -429,10 +429,10 @@ class ProcessorTest extends BaseTestCase
                     ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
                     ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
                 ],
-                'has_previous' => false,
-                'previous_cursor' => null,
-                'has_next' => true,
-                'next_cursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
+                'hasPrevious' => false,
+                'previousCursor' => null,
+                'hasNext' => true,
+                'nextCursor' => ['updated_at' => '2017-01-01 10:00:00', 'id' => '5'],
             ],
             (new StubPaginator('posts'))
                 ->backward()->limit(3)

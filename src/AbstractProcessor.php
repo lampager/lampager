@@ -71,16 +71,16 @@ abstract class AbstractProcessor
     public function process(Query $query, $rows)
     {
         $meta = [
-            'has_previous' => false,
-            'previous_cursor' => null,
-            'has_next' => false,
-            'next_cursor' => null,
+            'hasPrevious' => false,
+            'previousCursor' => null,
+            'hasNext' => false,
+            'nextCursor' => null,
         ];
 
         if ($this->shouldLtrim($query, $rows)) {
             $type = $query->direction()->forward() ? 'previous' : 'next';
-            $meta["has_{$type}"] = true;
-            $meta["{$type}_cursor"] = $this->makeCursor(
+            $meta['has' . ucfirst($type)] = true;
+            $meta[$type . 'Cursor'] = $this->makeCursor(
                 $query,
                 $this->offset($rows, (int)$query->exclusive())
             );
@@ -88,8 +88,8 @@ abstract class AbstractProcessor
         }
         if ($this->shouldRtrim($query, $rows)) {
             $type = $query->direction()->backward() ? 'previous' : 'next';
-            $meta["has_{$type}"] = true;
-            $meta["{$type}_cursor"] = $this->makeCursor(
+            $meta['has' . ucfirst($type)] = true;
+            $meta[$type . 'Cursor'] = $this->makeCursor(
                 $query,
                 $this->offset($rows, $query->limit() - $query->exclusive())
             );
@@ -98,7 +98,7 @@ abstract class AbstractProcessor
 
         // If we are not using UNION ALL, boolean values are not defined.
         if (!$query->selectOrUnionAll() instanceof UnionAll) {
-            $meta[$query->direction()->forward() ? 'has_previous' : 'has_next'] = null;
+            $meta[$query->direction()->forward() ? 'hasPrevious' : 'hasNext'] = null;
         }
 
         return $this->invokeFormatter($this->shouldReverse($query) ? $this->reverse($rows) : $rows, $meta, $query);
