@@ -7,11 +7,11 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
 class ProcessorTest extends BaseTestCase
 {
     public static $rows = [
-        ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-        ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-        ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-        ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-        ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+        ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
+        ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
+        ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
+        ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
+        ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
     ];
 
     /**

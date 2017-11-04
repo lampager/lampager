@@ -14,11 +14,11 @@ class StubPaginator extends Paginator
     use HasProcessor;
 
     public static $rows = [
-        ['id' => 1, 'updated_at' => '2017-01-01 10:00:00'],
-        ['id' => 3, 'updated_at' => '2017-01-01 10:00:00'],
-        ['id' => 5, 'updated_at' => '2017-01-01 10:00:00'],
-        ['id' => 2, 'updated_at' => '2017-01-01 11:00:00'],
-        ['id' => 4, 'updated_at' => '2017-01-01 11:00:00'],
+        ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
+        ['id' => '3', 'updated_at' => '2017-01-01 10:00:00'],
+        ['id' => '5', 'updated_at' => '2017-01-01 10:00:00'],
+        ['id' => '2', 'updated_at' => '2017-01-01 11:00:00'],
+        ['id' => '4', 'updated_at' => '2017-01-01 11:00:00'],
     ];
 
     /**
@@ -41,12 +41,8 @@ class StubPaginator extends Paginator
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
         ]);
         static::$pdo->exec('CREATE TABLE posts(id INTEGER PRIMARY KEY, updated_at TEXT)');
-        $stmt = static::$pdo->prepare('INSERT INTO posts(id, updated_at) VALUES (?, ?)');
-        foreach (static::$rows as $row) {
-            $stmt->bindValue(1, $row['id'], \PDO::PARAM_INT);
-            $stmt->bindValue(2, $row['updated_at'], \PDO::PARAM_STR);
-            $stmt->execute();
-        }
+        $stmt = static::$pdo->prepare('INSERT INTO posts(id, updated_at) VALUES (:id, :updated_at)');
+        array_map([$stmt, 'execute'], static::$rows);
     }
 
     /**
