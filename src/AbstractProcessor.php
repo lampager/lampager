@@ -71,28 +71,34 @@ abstract class AbstractProcessor
     public function process(Query $query, $rows)
     {
         $meta = [
-            'previous_cursor' => null,
-            'next_cursor' => null,
+            'hasPrevious' => false,
+            'previousCursor' => null,
+            'hasNext' => false,
+            'nextCursor' => null,
         ];
 
         if ($this->shouldLtrim($query, $rows)) {
-            $meta[$query->direction()->forward() ? 'previous_cursor' : 'next_cursor'] = $this->makeCursor(
+            $type = $query->direction()->forward() ? 'previous' : 'next';
+            $meta['has' . ucfirst($type)] = true;
+            $meta[$type . 'Cursor'] = $this->makeCursor(
                 $query,
                 $this->offset($rows, (int)$query->exclusive())
             );
             $rows = $this->slice($rows, 1);
         }
         if ($this->shouldRtrim($query, $rows)) {
-            $meta[$query->direction()->backward() ? 'previous_cursor' : 'next_cursor'] = $this->makeCursor(
+            $type = $query->direction()->backward() ? 'previous' : 'next';
+            $meta['has' . ucfirst($type)] = true;
+            $meta[$type . 'Cursor'] = $this->makeCursor(
                 $query,
                 $this->offset($rows, $query->limit() - $query->exclusive())
             );
             $rows = $this->slice($rows, 0, $query->limit());
         }
 
-        // If we are not using UNION ALL...
+        // If we are not using UNION ALL, boolean values are not defined.
         if (!$query->selectOrUnionAll() instanceof UnionAll) {
-            unset($meta[$query->direction()->forward() ? 'previous_cursor' : 'next_cursor']);
+            $meta[$query->direction()->forward() ? 'hasPrevious' : 'hasNext'] = null;
         }
 
         return $this->invokeFormatter($this->shouldReverse($query) ? $this->reverse($rows) : $rows, $meta, $query);
@@ -139,17 +145,14 @@ abstract class AbstractProcessor
     /**
      * Format result with default format.
      *
-     * @param  mixed $rows
-     * @param  array $meta
-     * @param  Query $query
-     * @return mixed
+     * @param  mixed            $rows
+     * @param  array            $meta
+     * @param  Query            $query
+     * @return PaginationResult
      */
     protected function defaultFormat($rows, array $meta, Query $query)
     {
-        return [
-            'records' => $rows,
-            'meta' => $meta,
-        ];
+        return new PaginationResult($rows, $meta);
     }
 
     /**
