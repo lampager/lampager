@@ -18,11 +18,11 @@ class ProcessorTest extends BaseTestCase
      * @param $expected
      * @param $actual
      */
-    protected function assertResultEquals($expected, $actual)
+    protected function assertResultSame($expected, $actual)
     {
-        $this->assertEquals(
-            json_decode(json_encode($expected)),
-            json_decode(json_encode($actual))
+        $this->assertSame(
+            json_decode(json_encode($expected), true),
+            json_decode(json_encode($actual), true)
         );
     }
 
