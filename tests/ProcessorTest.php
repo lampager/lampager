@@ -44,11 +44,11 @@ class ProcessorTest extends BaseTestCase
                 'next_cursor' => ['updated_at' => '2017-01-01 11:00:00', 'id' => '2'],
             ],
             (new StubPaginator('posts'))
-            ->forward()->limit(3)
-            ->orderBy('updated_at')
-            ->orderBy('id')
-            ->seekable()
-            ->paginate()
+                ->forward()->limit(3)
+                ->orderBy('updated_at')
+                ->orderBy('id')
+                ->seekable()
+                ->paginate()
         );
     }
 
