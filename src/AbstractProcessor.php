@@ -71,28 +71,34 @@ abstract class AbstractProcessor
     public function process(Query $query, $rows)
     {
         $meta = [
+            'has_previous' => false,
             'previous_cursor' => null,
+            'has_next' => false,
             'next_cursor' => null,
         ];
 
         if ($this->shouldLtrim($query, $rows)) {
-            $meta[$query->direction()->forward() ? 'previous_cursor' : 'next_cursor'] = $this->makeCursor(
+            $type = $query->direction()->forward() ? 'previous' : 'next';
+            $meta["has_{$type}"] = true;
+            $meta["{$type}_cursor"] = $this->makeCursor(
                 $query,
                 $this->offset($rows, (int)$query->exclusive())
             );
             $rows = $this->slice($rows, 1);
         }
         if ($this->shouldRtrim($query, $rows)) {
-            $meta[$query->direction()->backward() ? 'previous_cursor' : 'next_cursor'] = $this->makeCursor(
+            $type = $query->direction()->backward() ? 'previous' : 'next';
+            $meta["has_{$type}"] = true;
+            $meta["{$type}_cursor"] = $this->makeCursor(
                 $query,
                 $this->offset($rows, $query->limit() - $query->exclusive())
             );
             $rows = $this->slice($rows, 0, $query->limit());
         }
 
-        // If we are not using UNION ALL...
+        // If we are not using UNION ALL, boolean values are not defined.
         if (!$query->selectOrUnionAll() instanceof UnionAll) {
-            unset($meta[$query->direction()->forward() ? 'previous_cursor' : 'next_cursor']);
+            $meta[$query->direction()->forward() ? 'has_previous' : 'has_next'] = null;
         }
 
         return $this->invokeFormatter($this->shouldReverse($query) ? $this->reverse($rows) : $rows, $meta, $query);
