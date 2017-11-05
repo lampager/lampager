@@ -67,12 +67,17 @@ class Query
      */
     public static function create(array $orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder = null)
     {
-        if (!$orders) {
-            throw new \OutOfRangeException('At least one order constraint required');
+        if (!$cursor instanceof Cursor && !is_array($cursor)) {
+            throw new \InvalidArgumentException('Cursor must be either Cursor or array');
         }
-        $direction = new Direction($backward ? Direction::BACKWARD : Direction::FORWARD);
+        if (!is_bool($backward)) {
+            throw new \InvalidArgumentException('Direction must be bool');
+        }
+
         $orders = Order::createMany($orders);
+        $cursor = $cursor instanceof Cursor ? $cursor : new ArrayCursor($cursor);
         $limit = new Limit($limit);
+        $direction = new Direction($backward ? Direction::BACKWARD : Direction::FORWARD);
         $selectOrUnionAll = SelectOrUnionAll::create($orders, $cursor, $limit, $direction, $exclusive, $seekable);
         return new static($selectOrUnionAll, $orders, $cursor, $limit, $direction, $exclusive, $seekable, $builder);
     }
@@ -82,18 +87,28 @@ class Query
      *
      * @param Select|SelectOrUnionAll|UnionAll $selectOrUnionAll
      * @param Order[]                          $orders
-     * @param Cursor|int[]|string[]            $cursor
+     * @param Cursor                           $cursor
      * @param Limit                            $limit
      * @param Direction                        $direction
      * @param bool                             $exclusive
      * @param bool                             $seekable
      * @param mixed                            $builder
      */
-    public function __construct(SelectOrUnionAll $selectOrUnionAll, array $orders, $cursor, Limit $limit, Direction $direction, $exclusive, $seekable, $builder = null)
+    public function __construct(SelectOrUnionAll $selectOrUnionAll, array $orders, Cursor $cursor, Limit $limit, Direction $direction, $exclusive, $seekable, $builder = null)
     {
+        if (!$orders) {
+            throw new \OutOfRangeException('At least one order constraint required');
+        }
+        if (!is_bool($exclusive)) {
+            throw new \InvalidArgumentException('Exclusive must be bool');
+        }
+        if (!is_bool($seekable)) {
+            throw new \InvalidArgumentException('Seekable must be bool');
+        }
+
         $this->selectOrUnionAll = $selectOrUnionAll;
         $this->orders = $orders;
-        $this->cursor = $cursor instanceof Cursor ? $cursor : new ArrayCursor($cursor);
+        $this->cursor = $cursor;
         $this->limit = $limit->original();
         $this->direction = $direction;
         $this->exclusive = $exclusive;

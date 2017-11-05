@@ -84,4 +84,76 @@ class QueryTest extends BaseTestCase
 
         Query::create($orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder);
     }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Cursor must be either Cursor or array
+     */
+    public function testInvalidCursor()
+    {
+        $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
+        $cursor = 'Cursor';
+        $limit = 30;
+        $backward = true;
+        $exclusive = true;
+        $seekable = true;
+        $builder = 'Dummy Data';
+
+        Query::create($orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder);
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Direction must be bool
+     */
+    public function testInvalidDirection()
+    {
+        $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
+        $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
+        $limit = 30;
+        $backward = null;
+        $exclusive = true;
+        $seekable = true;
+        $builder = 'Dummy Data';
+
+        Query::create($orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder);
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Exclusive must be bool
+     */
+    public function testInvalidExclusive()
+    {
+        $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
+        $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
+        $limit = 30;
+        $backward = true;
+        $exclusive = null;
+        $seekable = true;
+        $builder = 'Dummy Data';
+
+        Query::create($orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder);
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Seekable must be bool
+     */
+    public function testInvalidSeekable()
+    {
+        $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
+        $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
+        $limit = 30;
+        $backward = true;
+        $exclusive = true;
+        $seekable = null;
+        $builder = 'Dummy Data';
+
+        Query::create($orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder);
+    }
 }
