@@ -5,9 +5,8 @@ namespace Lampager\Tests;
 use Lampager\ArrayProcessor;
 use Lampager\PaginationResult;
 use Lampager\Query;
-use PHPUnit\Framework\TestCase as BaseTestCase;
 
-class FormatterTest extends BaseTestCase
+class FormatterTest extends TestCase
 {
     /**
      * @test

@@ -2,9 +2,7 @@
 
 namespace Lampager\Tests;
 
-use PHPUnit\Framework\TestCase as BaseTestCase;
-
-class PaginationResultTest extends BaseTestCase
+class PaginationResultTest extends TestCase
 {
     public static $rows = [
         ['id' => '1', 'updated_at' => '2017-01-01 10:00:00'],
