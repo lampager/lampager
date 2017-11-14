@@ -111,7 +111,7 @@ abstract class AbstractProcessor
      * @param array $meta
      * @param Query $query
      */
-    public function invokeFormatter($rows, array $meta, Query $query)
+    protected function invokeFormatter($rows, array $meta, Query $query)
     {
         $formatter = static::callableFromFormatter($this->formatter ?: static::$defaultFormatter ?: [$this, 'defaultFormat']);
         return $formatter($rows, $meta, $query);
