@@ -50,10 +50,10 @@ class PaginationResult implements \IteratorAggregate
     /**
      * Get iterator of records.
      *
-     * @return \ArrayIterator
+     * @return \Traversable|\ArrayIterator
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->records);
+        return $this->records instanceof \Traversable ? $this->records : new \ArrayIterator($this->records);
     }
 }
