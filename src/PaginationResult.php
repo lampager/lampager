@@ -50,7 +50,7 @@ class PaginationResult implements \IteratorAggregate, \Countable
     /**
      * Get iterator of records.
      *
-     * @return \Traversable|\ArrayIterator
+     * @return \ArrayIterator|\Traversable
      */
     public function getIterator()
     {
