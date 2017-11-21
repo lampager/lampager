@@ -39,5 +39,6 @@ class PaginationResultTest extends BaseTestCase
             ->paginate(['id' => '3', 'updated_at' => '2017-01-01 10:00:00']);
 
         $this->assertResultSame($result->records, iterator_to_array($result));
+        $this->assertResultSame(count($result->records), count($result));
     }
 }
