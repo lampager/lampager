@@ -5,7 +5,7 @@ namespace Lampager;
 /**
  * Class PaginationResult
  */
-class PaginationResult implements \IteratorAggregate
+class PaginationResult implements \IteratorAggregate, \Countable
 {
     /**
      * @var mixed
@@ -50,10 +50,21 @@ class PaginationResult implements \IteratorAggregate
     /**
      * Get iterator of records.
      *
-     * @return \ArrayIterator
+     * @return \Traversable|\ArrayIterator
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->records);
+        return $this->records instanceof \Traversable ? $this->records : new \ArrayIterator($this->records);
+    }
+
+    /**
+     * Count records.
+     *
+     * @return int
+     * @see https://wiki.php.net/rfc/counting_non_countables
+     */
+    public function count()
+    {
+        return count($this->records);
     }
 }
