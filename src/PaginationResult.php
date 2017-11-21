@@ -64,6 +64,16 @@ class PaginationResult implements \IteratorAggregate, \Countable
      */
     public function count()
     {
-        return $this->records instanceof \Countable || is_array($this->records) ? count($this->records) : 0;
+        // @codeCoverageIgnoreStart
+        if (
+            !$this->records instanceof \Countable
+            && !is_array($this->records)
+            && version_compare(PHP_VERSION, '7.2.0', '>=')
+        ) {
+            // PHP: rfc:counting_non_countables https://wiki.php.net/rfc/counting_non_countables
+            trigger_error('count(): Parameter must be an array or an object that implements Countable', E_USER_WARNING);
+        }
+        // @codeCoverageIgnoreEnd
+        return count($this->records);
     }
 }
