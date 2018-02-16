@@ -53,6 +53,20 @@ class FormatterTest extends TestCase
 
     /**
      * @test
+     */
+    public function testFormatBehavesPriorToInvoke()
+    {
+        $paginator = new StubPaginator('posts');
+        try {
+            $result = $paginator->orderBy('id')->useFormatter(CustomStubFormatter::class)->paginate();
+            $this->assertSame('Lampager\Tests\CustomStubFormatter::format', $result->called_method);
+        } finally {
+            $paginator->restoreFormatter();
+        }
+    }
+
+    /**
+     * @test
      * @expectedException \InvalidArgumentException
      */
     public function invalidFormatter()
