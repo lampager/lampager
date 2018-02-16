@@ -11,12 +11,12 @@ use Lampager\Query\UnionAll;
 abstract class AbstractProcessor
 {
     /**
-     * @var null|callable|Formatter
+     * @var null|callable
      */
     protected static $defaultFormatter;
 
     /**
-     * @var null|callable|Formatter
+     * @var null|callable
      */
     protected $formatter;
 
@@ -107,39 +107,32 @@ abstract class AbstractProcessor
     /**
      * Invoke formatter.
      *
-     * @param mixed $rows
-     * @param array $meta
-     * @param Query $query
+     * @param  mixed $rows
+     * @param  array $meta
+     * @param  Query $query
+     * @return mixed
      */
     protected function invokeFormatter($rows, array $meta, Query $query)
     {
-        $formatter = static::callableFromFormatter($this->formatter ?: static::$defaultFormatter ?: [$this, 'defaultFormat']);
+        $formatter = $this->formatter ?: static::$defaultFormatter ?: [$this, 'defaultFormat'];
         return $formatter($rows, $meta, $query);
     }
 
     /**
      * Validate formatter and return in normalized form.
      *
-     * @param  mixed              $formatter
-     * @return callable|Formatter
-     */
-    protected static function validateFormatter($formatter)
-    {
-        if (!is_subclass_of($formatter, Formatter::class) && !is_callable($formatter)) {
-            throw new \InvalidArgumentException('Formatter must be an instanceof ' . Formatter::class . ' or callable.');
-        }
-        return is_string($formatter) ? new $formatter() : $formatter;
-    }
-
-    /**
-     * Return formatter in callable form.
-     *
      * @param  mixed    $formatter
      * @return callable
      */
-    protected static function callableFromFormatter($formatter)
+    protected static function validateFormatter($formatter)
     {
-        return is_callable($formatter) ? $formatter : [$formatter, 'format'];
+        if (is_subclass_of($formatter, Formatter::class)) {
+            return [is_string($formatter) ? new $formatter() : $formatter, 'format'];
+        }
+        if (is_callable($formatter)) {
+            return $formatter;
+        }
+        throw new \InvalidArgumentException('Formatter must be an instanceof ' . Formatter::class . ' or callable.');
     }
 
     /**
