@@ -57,7 +57,7 @@ class LimitTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\LimitNotNumberException
+     * @expectedException \Lampager\Exceptions\Query\LimitParameterException
      * @expectedExceptionMessage Limit must be integer
      */
     public function testInvalidLimitType()
@@ -67,7 +67,7 @@ class LimitTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\LimitNotPositiveException
+     * @expectedException \Lampager\Exceptions\Query\LimitParameterException
      * @expectedExceptionMessage Limit must be positive integer
      */
     public function testInvalidLimitRange()

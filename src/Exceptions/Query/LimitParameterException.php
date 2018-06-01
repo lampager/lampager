@@ -6,8 +6,8 @@ use Lampager\Contracts\Exceptions\Query\BadQueryException;
 use Lampager\Exceptions\DomainException;
 
 /**
- * Class LimitNotNumberException
+ * Class LimitParameterException
  */
-class LimitNotNumberException extends DomainException implements BadQueryException
+class LimitParameterException extends DomainException implements BadQueryException
 {
 }

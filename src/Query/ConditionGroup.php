@@ -4,7 +4,7 @@ namespace Lampager\Query;
 
 use Lampager\Contracts\Cursor;
 use Lampager\ArrayCursor;
-use Lampager\Exceptions\Query\MissingCursorParameterException;
+use Lampager\Exceptions\Query\CursorParameterException;
 
 /**
  * Class ConditionGroup
@@ -70,7 +70,7 @@ class ConditionGroup implements \IteratorAggregate
         foreach ($orders as $order) {
             if (!$cursor->has($order->column())) {
                 // All parameters must be specified.
-                throw new MissingCursorParameterException("Missing cursor parameter: {$order->column()}");
+                throw new CursorParameterException("Missing cursor parameter: {$order->column()}");
             }
             $isLastKey = ++$i === $count;
             $conditions[] = Condition::create(

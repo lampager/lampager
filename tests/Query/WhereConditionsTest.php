@@ -392,7 +392,7 @@ class WhereConditionsTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\MissingCursorParameterException
+     * @expectedException \Lampager\Exceptions\Query\CursorParameterException
      * @expectedExceptionMessage Missing cursor parameter: created_at
      */
     public function testMissingCursorParameter()

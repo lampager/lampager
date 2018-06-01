@@ -2,8 +2,7 @@
 
 namespace Lampager\Query;
 
-use Lampager\Exceptions\Query\LimitNotNumberException;
-use Lampager\Exceptions\Query\LimitNotPositiveException;
+use Lampager\Exceptions\Query\LimitParameterException;
 
 /**
  * Class Limit
@@ -46,10 +45,10 @@ class Limit
     protected static function validate($limit, $isSupportQuery)
     {
         if (!ctype_digit("$limit")) {
-            throw new LimitNotNumberException('Limit must be integer');
+            throw new LimitParameterException('Limit must be integer');
         }
         if ($limit < 1) {
-            throw new LimitNotPositiveException('Limit must be positive integer');
+            throw new LimitParameterException('Limit must be positive integer');
         }
         return $isSupportQuery ? 1 : ($limit + 1);
     }
