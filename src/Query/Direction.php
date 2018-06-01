@@ -2,6 +2,8 @@
 
 namespace Lampager\Query;
 
+use Lampager\Exceptions\Query\BadKeywordException;
+
 /**
  * Class Direction
  */
@@ -33,7 +35,7 @@ class Direction
     {
         $direction = strtolower($direction);
         if (!preg_match('/\A(forward|backward)\z/', $direction, $m)) {
-            throw new \DomainException('Direction must be "forward" or "backward"');
+            throw new BadKeywordException('Direction must be "forward" or "backward"');
         }
         return $m[1];
     }

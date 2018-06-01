@@ -3,6 +3,7 @@
 namespace Lampager;
 
 use Lampager\Contracts\Formatter;
+use Lampager\Exceptions\InvalidArgumentException;
 use Lampager\Query\UnionAll;
 
 /**
@@ -132,7 +133,7 @@ abstract class AbstractProcessor
         if (is_callable($formatter)) {
             return $formatter;
         }
-        throw new \InvalidArgumentException('Formatter must be an instanceof ' . Formatter::class . ' or callable.');
+        throw new InvalidArgumentException('Formatter must be an instanceof ' . Formatter::class . ' or callable.');
     }
 
     /**

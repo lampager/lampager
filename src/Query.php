@@ -3,6 +3,8 @@
 namespace Lampager;
 
 use Lampager\Contracts\Cursor;
+use Lampager\Exceptions\InvalidArgumentException;
+use Lampager\Exceptions\Query\InsufficientConstraintsException;
 use Lampager\Query\Direction;
 use Lampager\Query\Limit;
 use Lampager\Query\Order;
@@ -68,10 +70,10 @@ class Query
     public static function create(array $orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder = null)
     {
         if (!$cursor instanceof Cursor && !is_array($cursor)) {
-            throw new \InvalidArgumentException('Cursor must be either Cursor or array');
+            throw new InvalidArgumentException('Cursor must be either Cursor or array');
         }
         if (!is_bool($backward)) {
-            throw new \InvalidArgumentException('Direction must be bool');
+            throw new InvalidArgumentException('Direction must be bool');
         }
 
         $orders = Order::createMany($orders);
@@ -97,13 +99,13 @@ class Query
     public function __construct(SelectOrUnionAll $selectOrUnionAll, array $orders, Cursor $cursor, Limit $limit, Direction $direction, $exclusive, $seekable, $builder = null)
     {
         if (!$orders) {
-            throw new \OutOfRangeException('At least one order constraint required');
+            throw new InsufficientConstraintsException('At least one order constraint required');
         }
         if (!is_bool($exclusive)) {
-            throw new \InvalidArgumentException('Exclusive must be bool');
+            throw new InvalidArgumentException('Exclusive must be bool');
         }
         if (!is_bool($seekable)) {
-            throw new \InvalidArgumentException('Seekable must be bool');
+            throw new InvalidArgumentException('Seekable must be bool');
         }
 
         $this->selectOrUnionAll = $selectOrUnionAll;
