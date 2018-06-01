@@ -70,7 +70,7 @@ class ConditionGroup implements \IteratorAggregate
         foreach ($orders as $order) {
             if (!$cursor->has($order->column())) {
                 // All parameters must be specified.
-                throw new CursorParameterException("Missing cursor parameter: {$order->column()}");
+                throw new CursorParameterException("Missing cursor parameter: {$order->column()}", $order->column());
             }
             $isLastKey = ++$i === $count;
             $conditions[] = Condition::create(
