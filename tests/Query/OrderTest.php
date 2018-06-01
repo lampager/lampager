@@ -46,7 +46,7 @@ class OrderTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \DomainException
+     * @expectedException \Lampager\Exceptions\Query\BadKeywordException
      * @expectedExceptionMessage Order must be "asc", "ascending", "desc" or "descending"
      */
     public function testInvalidDirection()

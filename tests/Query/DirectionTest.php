@@ -52,7 +52,7 @@ class DirectionTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \DomainException
+     * @expectedException \Lampager\Exceptions\Query\BadKeywordException
      * @expectedExceptionMessage Direction must be "forward" or "backward"
      */
     public function testInvalidDirection()
