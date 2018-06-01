@@ -3,6 +3,7 @@
 namespace Lampager\Tests\Query\Conditions;
 
 use Codeception\Specify;
+use Lampager\Exceptions\Query\CursorParameterException;
 use Lampager\Query\Condition;
 use Lampager\Query\ConditionGroup;
 use Lampager\Query\Direction;
@@ -392,15 +393,18 @@ class WhereConditionsTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\CursorParameterException
-     * @expectedExceptionMessage Missing cursor parameter: created_at
      */
     public function testMissingCursorParameter()
     {
-        $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
-        $direction = new Direction(Direction::FORWARD);
-        $cursor = ['id' => 10, 'updated_at' => '2017-01-01 18:00:00'];
-        ConditionGroup::create($orders, $cursor, $direction, false, true, false);
+        try {
+            $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
+            $direction = new Direction(Direction::FORWARD);
+            $cursor = ['id' => 10, 'updated_at' => '2017-01-01 18:00:00'];
+            ConditionGroup::create($orders, $cursor, $direction, false, true, false);
+        } catch (CursorParameterException $e) {
+            $this->assertSame('Missing cursor parameter: created_at', $e->getMessage());
+            $this->assertSame('created_at', $e->getColumn());
+        }
     }
 
     /**
