@@ -4,6 +4,7 @@ namespace Lampager\Concerns;
 
 use Lampager\Contracts\Formatter;
 use Lampager\AbstractProcessor;
+use Lampager\Exceptions\InvalidArgumentException;
 use Lampager\Query;
 
 trait HasProcessor
@@ -69,7 +70,7 @@ trait HasProcessor
     protected static function validateProcessor($processor)
     {
         if (!is_subclass_of($processor, AbstractProcessor::class)) {
-            throw new \InvalidArgumentException('Processor must be an instanceof ' . AbstractProcessor::class);
+            throw new InvalidArgumentException('Processor must be an instanceof ' . AbstractProcessor::class);
         }
         return is_string($processor) ? new $processor() : $processor;
     }

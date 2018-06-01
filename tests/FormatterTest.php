@@ -67,7 +67,7 @@ class FormatterTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Lampager\Exceptions\InvalidArgumentException
      */
     public function invalidFormatter()
     {
@@ -76,7 +76,7 @@ class FormatterTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Lampager\Exceptions\InvalidArgumentException
      */
     public function invalidProcessor()
     {

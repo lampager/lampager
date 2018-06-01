@@ -69,7 +69,7 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \OutOfRangeException
+     * @expectedException \Lampager\Exceptions\Query\InsufficientConstraintsException
      * @expectedExceptionMessage At least one order constraint required
      */
     public function testEmptyConstraints()
@@ -87,7 +87,7 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Lampager\Exceptions\InvalidArgumentException
      * @expectedExceptionMessage Cursor must be either Cursor or array
      */
     public function testInvalidCursor()
@@ -105,7 +105,7 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Lampager\Exceptions\InvalidArgumentException
      * @expectedExceptionMessage Direction must be bool
      */
     public function testInvalidDirection()
@@ -123,7 +123,7 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Lampager\Exceptions\InvalidArgumentException
      * @expectedExceptionMessage Exclusive must be bool
      */
     public function testInvalidExclusive()
@@ -141,7 +141,7 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Lampager\Exceptions\InvalidArgumentException
      * @expectedExceptionMessage Seekable must be bool
      */
     public function testInvalidSeekable()

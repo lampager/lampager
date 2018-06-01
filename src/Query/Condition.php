@@ -2,6 +2,8 @@
 
 namespace Lampager\Query;
 
+use Lampager\Exceptions\Query\BadKeywordException;
+
 /**
  * Class Condition
  */
@@ -137,7 +139,7 @@ class Condition
     protected static function validate($comparator, $isPrimaryKey)
     {
         if (!isset(static::$comparatorInverseMap[$isPrimaryKey][$comparator])) {
-            throw new \DomainException(
+            throw new BadKeywordException(
                 $isPrimaryKey
                     ? 'Comparator for primary key condition must be "<", ">", "<=" or ">="'
                     : 'Comparator for non-primary key condition must be "<", ">" or "="'

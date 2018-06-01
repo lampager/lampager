@@ -2,6 +2,8 @@
 
 namespace Lampager\Query;
 
+use Lampager\Exceptions\Query\BadKeywordException;
+
 /**
  * Class Order
  */
@@ -53,7 +55,7 @@ class Order
     {
         $order = strtolower($order);
         if (!preg_match('/\A(asc|desc)(?:ending)?\z/', $order, $m)) {
-            throw new \DomainException('Order must be "asc", "ascending", "desc" or "descending"');
+            throw new BadKeywordException('Order must be "asc", "ascending", "desc" or "descending"');
         }
         return $m[1];
     }

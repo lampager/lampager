@@ -372,7 +372,7 @@ class WhereConditionsTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \DomainException
+     * @expectedException \Lampager\Exceptions\Query\BadKeywordException
      * @expectedExceptionMessage Comparator for non-primary key condition must be "<", ">" or "="
      */
     public function testInvalidComparatorForNonPrimaryKey()
@@ -382,7 +382,7 @@ class WhereConditionsTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \DomainException
+     * @expectedException \Lampager\Exceptions\Query\BadKeywordException
      * @expectedExceptionMessage Comparator for primary key condition must be "<", ">", "<=" or ">="
      */
     public function testInvalidComparatorForPrimaryKey()
@@ -392,7 +392,7 @@ class WhereConditionsTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \UnexpectedValueException
+     * @expectedException \Lampager\Exceptions\Query\CursorParameterException
      * @expectedExceptionMessage Missing cursor parameter: created_at
      */
     public function testMissingCursorParameter()
