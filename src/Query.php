@@ -119,7 +119,7 @@ class Query
     }
 
     /**
-     * @return Select|Select[]|SelectOrUnionAll|UnionAll
+     * @return Select|SelectOrUnionAll|UnionAll
      */
     public function selectOrUnionAll()
     {

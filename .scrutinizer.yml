@@ -9,8 +9,14 @@ filter:
 
 build:
 
+  nodes:
+    analysis:
+      tests:
+        override:
+          - php-scrutinizer-run
+
   environment:
-    php: '7.1'
+    php: '7.3'
 
   dependencies:
     before:

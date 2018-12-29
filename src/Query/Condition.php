@@ -53,7 +53,7 @@ class Condition
     protected $comparator;
 
     /**
-     * @var string
+     * @var int|string
      */
     protected $right;
 
@@ -173,7 +173,7 @@ class Condition
     }
 
     /**
-     * @return string
+     * @return int|string
      */
     public function right()
     {
