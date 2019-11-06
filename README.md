@@ -490,11 +490,12 @@ use Lampager\ArrayProcessor;
 use Lampager\PaginationResult;
 
 $formatter = function ($rows, array $meta, Query $query) {
-    // Drop table prefix (e.g. "`posts`.`updated_at`" -> "updated_at")
+    // Drop table prefix in meta properties (e.g. "posts.updated_at" -> "updated_at")
     foreach (array_filter($meta, 'is_array') as $property => $cursor) {
         foreach ($cursor as $column => $field) {
             unset($meta[$property][$column]);
-            $meta[$property][preg_replace('/^(?:(?:`[^`]*?`|\w*?)\.)*?(?:`([^`]*)`|(\w*))$/', '$1$2', $column)] = $field;
+            $segments = explode('.', $column);
+            $meta[$property][end($segments)] = $field;
         }
     }
     return new PaginationResult($rows, $meta);
@@ -517,11 +518,12 @@ class DropTablePrefix implements Formatter
 {
     public function format($rows, array $meta, Query $query)
     {
-        // Drop table prefix (e.g. "`posts`.`updated_at`" -> "updated_at")
+        // Drop table prefix in meta properties (e.g. "posts.updated_at" -> "updated_at")
         foreach (array_filter($meta, 'is_array') as $property => $cursor) {
             foreach ($cursor as $column => $field) {
                 unset($meta[$property][$column]);
-                $meta[$property][preg_replace('/^(?:(?:`[^`]*?`|\w*?)\.)*?(?:`([^`]*)`|(\w*))$/', '$1$2', $column)] = $field;
+                $segments = explode('.', $column);
+                $meta[$property][end($segments)] = $field;
             }
         }
         return new PaginationResult($rows, $meta);
