@@ -494,7 +494,7 @@ $formatter = function ($rows, array $meta, Query $query) {
     foreach (array_filter($meta, 'is_array') as $property => $cursor) {
         foreach ($cursor as $column => $field) {
             unset($meta[$property][$column]);
-            $meta[$property][preg_replace('/^(?:(?:`\w*?`|\w*?).)??(?:`(\w*)`|(\w*))$/', '$1$2', $column)] = $field;
+            $meta[$property][preg_replace('/^(?:(?:`[^`]*?`|\w*?)\.)*?(?:`([^`]*)`|(\w*))$/', '$1$2', $column)] = $field;
         }
     }
     return new PaginationResult($rows, $meta);
@@ -521,7 +521,7 @@ class DropTablePrefix implements Formatter
         foreach (array_filter($meta, 'is_array') as $property => $cursor) {
             foreach ($cursor as $column => $field) {
                 unset($meta[$property][$column]);
-                $meta[$property][preg_replace('/^(?:(?:`\w*?`|\w*?).)??(?:`(\w*)`|(\w*))$/', '$1$2', $column)] = $field;
+                $meta[$property][preg_replace('/^(?:(?:`[^`]*?`|\w*?)\.)*?(?:`([^`]*)`|(\w*))$/', '$1$2', $column)] = $field;
             }
         }
         return new PaginationResult($rows, $meta);
