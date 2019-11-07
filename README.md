@@ -403,7 +403,7 @@ Paginator::configure(Cursor|array $cursor = []): Query
 
 #### Arguments
 
-- **`(mixed)`** __*$cursor*__<br> An associative array that contains `$column => $value` or an object that implements `\Lampager\Cursor`. It must be **all-or-nothing**.
+- **`(mixed)`** __*$cursor*__<br> An associative array that contains `$column => $value` or an object that implements `\Lampager\Contracts\Cursor`. It must be **all-or-nothing**.
   - For the initial page, omit this parameter or pass an empty array.
   - For subsequent pages, pass all parameters. Partial parameters are not allowed.
 
