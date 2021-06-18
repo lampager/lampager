@@ -71,11 +71,12 @@ abstract class AbstractProcessor
     /**
      * Defines which pre-SQL column/cursor corresponds to which post-SQL field.
      *
+     * @param  null|callable|Mapper|string $mapper
      * @return $this
      */
-    public function setMapper($mapping)
+    public function setMapper($mapper)
     {
-        $this->mapper = static::validateMapper($mapping);
+        $this->mapper = static::validateMapper($mapper);
         return $this;
     }
 
