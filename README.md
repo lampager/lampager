@@ -180,7 +180,7 @@ object(Lampager\PaginationResult)#1 (5) {
 
 ## Question: How about [Tuple comparison](https://www.sql-workbench.eu/comparison/tuple_comparison.html)?
 
-With this feature, SQL statements should be simpler. However, according to [SQL Feature Comparison](https://www.sql-workbench.eu/dbms_comparison.html), some RDBMS, such as SQLServer, do not support this syntax. Therefore, Lampager continuously use redundant statements.
+With this feature, SQL statements should be simpler. However, according to [SQL Feature Comparison](https://www.sql-workbench.eu/dbms_comparison.html), some RDBMS, such as SQLServer, do not support this syntax. Therefore, Lampager continuously uses redundant statements.
 
 ## Classes
 
