@@ -25,13 +25,12 @@ class ArrayMapper implements Mapper
      * Determines which pre-SQL column/cursor corresponds to which post-SQL field.
      *
      * @param string $columnOrCursorName
-     * @param string $retrievedFieldName
      * @return string
      */
-    public function map($columnOrCursorName, $retrievedFieldName)
+    public function map($columnOrCursorName)
     {
         return isset($this->mapping[$columnOrCursorName])
             ? $this->mapping[$columnOrCursorName]
-            : $retrievedFieldName;
+            : $columnOrCursorName;
     }
 }

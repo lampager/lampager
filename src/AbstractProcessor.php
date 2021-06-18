@@ -74,7 +74,7 @@ abstract class AbstractProcessor
      * @param  null|callable|Mapper|string $mapper
      * @return $this
      */
-    public function setMapper($mapper)
+    public function useMapper($mapper)
     {
         $this->mapper = static::validateMapper($mapper);
         return $this;
@@ -308,11 +308,9 @@ abstract class AbstractProcessor
      */
     protected function mappedField($row, $column)
     {
-        $mappedColumn = isset($this->mapping[$column])
-            ? $this->mapping[$column]
-            : $column;
+        $mapper = $this->mapper;
 
-        return $this->field($row, $mappedColumn);
+        return $this->field($row, $mapper ? $mapper($column) : $column);
     }
 
     /**
