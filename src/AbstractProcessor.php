@@ -3,6 +3,7 @@
 namespace Lampager;
 
 use Lampager\Contracts\Formatter;
+use Lampager\Contracts\Mapper;
 use Lampager\Exceptions\InvalidArgumentException;
 use Lampager\Query\UnionAll;
 
@@ -20,6 +21,11 @@ abstract class AbstractProcessor
      * @var null|callable
      */
     protected $formatter;
+
+    /**
+     * @var null|callable
+     */
+    protected $mapper;
 
     /**
      * Override static default formatter.
@@ -59,6 +65,17 @@ abstract class AbstractProcessor
     public function restoreFormatter()
     {
         $this->formatter = null;
+        return $this;
+    }
+
+    /**
+     * Defines which pre-SQL column/cursor corresponds to which post-SQL field.
+     *
+     * @return $this
+     */
+    public function setMapper($mapping)
+    {
+        $this->mapper = static::validateMapper($mapping);
         return $this;
     }
 
@@ -137,6 +154,29 @@ abstract class AbstractProcessor
     }
 
     /**
+     * Validate mapper and return in normalized form.
+     *
+     * @param  mixed         $mapper
+     * @return null|callable
+     */
+    protected static function validateMapper($mapper)
+    {
+        if (is_null($mapper)) {
+            return null;
+        }
+        if (is_subclass_of($mapper, Mapper::class)) {
+            return [is_string($mapper) ? new $mapper() : $mapper, 'map'];
+        }
+        if (is_callable($mapper)) {
+            return $mapper;
+        }
+        if (is_array($mapper)) {
+            return [new ArrayMapper($mapper), 'map'];
+        }
+        throw new InvalidArgumentException('Mapper must be null, an instanceof ' . Mapper::class . ', callable or array.');
+    }
+
+    /**
      * Format result with default format.
      *
      * @param  mixed            $rows
@@ -181,7 +221,7 @@ abstract class AbstractProcessor
         foreach ($selectOrUnionAll->supportQuery()->orders() as $order) {
 
             // Retrieve values
-            $field = $this->field($first, $order->column());
+            $field = $this->mappedField($first, $order->column());
             $cursor = $query->cursor()->get($order->column());
 
             // Compare the first row and the cursor
@@ -244,7 +284,7 @@ abstract class AbstractProcessor
     {
         $fields = [];
         foreach ($query->orders() as $order) {
-            $fields[$order->column()] = $this->field($row, $order->column());
+            $fields[$order->column()] = $this->mappedField($row, $order->column());
         }
         return $fields;
     }
@@ -257,6 +297,22 @@ abstract class AbstractProcessor
      * @return int|string
      */
     abstract protected function field($row, $column);
+
+    /**
+     * Return comparable value from a mapping-resolved row.
+     *
+     * @param  mixed      $row
+     * @param  string     $column
+     * @return int|string
+     */
+    protected function mappedField($row, $column)
+    {
+        $mappedColumn = isset($this->mapping[$column])
+            ? $this->mapping[$column]
+            : $column;
+
+        return $this->field($row, $mappedColumn);
+    }
 
     /**
      * Compare the values.
