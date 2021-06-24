@@ -22,7 +22,7 @@ before_script:
   - mkdir -p build/logs
 
 script:
-  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - php -dxdebug.mode=coverage vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
   - travis_retry php vendor/bin/coveralls
