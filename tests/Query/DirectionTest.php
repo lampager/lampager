@@ -52,11 +52,12 @@ class DirectionTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\BadKeywordException
-     * @expectedExceptionMessage Direction must be "forward" or "backward"
      */
     public function testInvalidDirection()
     {
+        $this->expectException(\Lampager\Exceptions\Query\BadKeywordException::class);
+        $this->expectExceptionMessage('Direction must be "forward" or "backward"');
+
         new Direction('forword');
     }
 }

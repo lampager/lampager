@@ -57,21 +57,23 @@ class LimitTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\LimitParameterException
-     * @expectedExceptionMessage Limit must be integer
      */
     public function testInvalidLimitType()
     {
+        $this->expectException(\Lampager\Exceptions\Query\LimitParameterException::class);
+        $this->expectExceptionMessage('Limit must be integer');
+
         new Limit('foo');
     }
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\LimitParameterException
-     * @expectedExceptionMessage Limit must be positive integer
      */
     public function testInvalidLimitRange()
     {
+        $this->expectException(\Lampager\Exceptions\Query\LimitParameterException::class);
+        $this->expectExceptionMessage('Limit must be positive integer');
+
         new Limit(0);
     }
 }

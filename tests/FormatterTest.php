@@ -67,19 +67,21 @@ class FormatterTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\InvalidArgumentException
      */
     public function invalidFormatter()
     {
+        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+
         (new StubPaginator('posts'))->useProcessor(function () {});
     }
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\InvalidArgumentException
      */
     public function invalidProcessor()
     {
+        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+
         (new StubPaginator('posts'))->useFormatter(__CLASS__);
     }
 }

@@ -373,21 +373,23 @@ class WhereConditionsTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\BadKeywordException
-     * @expectedExceptionMessage Comparator for non-primary key condition must be "<", ">" or "="
      */
     public function testInvalidComparatorForNonPrimaryKey()
     {
+        $this->expectException(\Lampager\Exceptions\Query\BadKeywordException::class);
+        $this->expectExceptionMessage('Comparator for non-primary key condition must be "<", ">" or "="');
+
         new Condition('created_at', '<=', '2017-01-01 12:00:00');
     }
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\BadKeywordException
-     * @expectedExceptionMessage Comparator for primary key condition must be "<", ">", "<=" or ">="
      */
     public function testInvalidComparatorForPrimaryKey()
     {
+        $this->expectException(\Lampager\Exceptions\Query\BadKeywordException::class);
+        $this->expectExceptionMessage('Comparator for primary key condition must be "<", ">", "<=" or ">="');
+
         new Condition('id', '=', 10, true);
     }
 
