@@ -13,7 +13,7 @@ The core package of Lampager
 
 ## Requirements
 
-- PHP: ^5.6 || ^7.0 || ^8.0
+- PHP: `^5.6 || ^7.0 || ^8.0`
 
 ## Installing
 
