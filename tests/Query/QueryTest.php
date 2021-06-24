@@ -69,11 +69,12 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\InsufficientConstraintsException
-     * @expectedExceptionMessage At least one order constraint required
      */
     public function testEmptyConstraints()
     {
+        $this->expectException(\Lampager\Exceptions\Query\InsufficientConstraintsException::class);
+        $this->expectExceptionMessage('At least one order constraint required');
+
         $orders = [];
         $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
         $limit = 30;
@@ -87,11 +88,12 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage Cursor must be either Cursor or array
      */
     public function testInvalidCursor()
     {
+        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cursor must be either Cursor or array');
+
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
         $cursor = 'Cursor';
         $limit = 30;
@@ -105,11 +107,12 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage Direction must be bool
      */
     public function testInvalidDirection()
     {
+        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Direction must be bool');
+
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
         $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
         $limit = 30;
@@ -123,11 +126,12 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage Exclusive must be bool
      */
     public function testInvalidExclusive()
     {
+        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Exclusive must be bool');
+
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
         $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
         $limit = 30;
@@ -141,11 +145,12 @@ class QueryTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage Seekable must be bool
      */
     public function testInvalidSeekable()
     {
+        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Seekable must be bool');
+
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
         $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
         $limit = 30;

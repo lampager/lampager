@@ -1,14 +1,13 @@
 language: php
 
-matrix:
-  include:
-    - php: 5.6
-      env: PHPUNIT_VERSION=5.7.*
-    - php: 7.0
-    - php: 7.1
-    - php: 7.2
-    - php: 7.3
-    - php: 7.4
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
+  - 8.0
 
 cache:
   directories:
@@ -17,7 +16,8 @@ cache:
 
 before_script:
   - composer self-update
-  - if [ "$PHPUNIT_VERSION" != "" ]; then composer require "phpunit/phpunit:${PHPUNIT_VERSION}" --no-update; fi;
+  - composer require phpunit/phpunit --dev --no-update
+  - composer require codeception/specify --dev --no-update
   - composer update
   - mkdir -p build/logs
 

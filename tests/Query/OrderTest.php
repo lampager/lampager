@@ -46,11 +46,12 @@ class OrderTest extends BaseTestCase
 
     /**
      * @test
-     * @expectedException \Lampager\Exceptions\Query\BadKeywordException
-     * @expectedExceptionMessage Order must be "asc", "ascending", "desc" or "descending"
      */
     public function testInvalidDirection()
     {
+        $this->expectException(\Lampager\Exceptions\Query\BadKeywordException::class);
+        $this->expectExceptionMessage('Order must be "asc", "ascending", "desc" or "descending"');
+
         new Order('id', 'ascccending');
     }
 }
