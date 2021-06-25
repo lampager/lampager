@@ -2,7 +2,7 @@
 <img width="280" alt="lampager" src="https://user-images.githubusercontent.com/1351893/31754281-a36010cc-b4d1-11e7-8371-851f5faa3785.png">
 </p>
 <p align="center">
-<a href="https://travis-ci.com/lampager/lampager"><img src="https://travis-ci.com/lampager/lampager.svg?branch=master" alt="Build Status"></a>
+<a href="https://github.com/lampager/lampager/actions"><img src="https://github.com/lampager/lampager/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/github/lampager/lampager?branch=master"><img src="https://coveralls.io/repos/github/lampager/lampager/badge.svg?branch=master" alt="Coverage Status"></a>
 <a href="https://scrutinizer-ci.com/g/lampager/lampager/?branch=master"><img src="https://scrutinizer-ci.com/g/lampager/lampager/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
 </p>
