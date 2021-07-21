@@ -17,8 +17,8 @@ interface Cursor
     /**
      * Return a cursor specified by the column.
      *
-     * @param  string     $column Column.
-     * @return int|string
+     * @param  string          $column Column.
+     * @return null|int|string
      */
     public function get($column);
 }
