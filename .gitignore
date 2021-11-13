@@ -1,4 +1,6 @@
 composer.lock
 /vendor/
 /build/logs/
+/.idea/
 .php_cs.cache
+.phpunit.result.cache
