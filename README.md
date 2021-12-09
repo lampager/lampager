@@ -182,7 +182,7 @@ object(Lampager\PaginationResult)#1 (5) {
 
 With this feature, SQL statements should be simpler. However, according to [SQL Feature Comparison](https://www.sql-workbench.eu/dbms_comparison.html), some RDBMS, such as SQLServer, do not support this syntax. Therefore, Lampager continuously uses redundant statements.
 
-It is also useful for Doctrine 2 since its DQL lexer does not support the syntax and triggers parse errors. (Still we haven't created *lampager-doctrine2* yet)
+It is also useful for [Doctrine 2](https://github.com/lampager/lampager-doctrine2) since its DQL lexer does not support the syntax and triggers parse errors. 
 
 ## Classes
 
