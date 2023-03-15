@@ -19,9 +19,7 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: xdebug
 
-      - run: composer require phpunit/phpunit --dev --no-update
-      - run: composer require codeception/specify --dev --no-update
-      - run: composer update
+      - run: composer install
       - run: mkdir -p build/logs
       - run: 'vendor/bin/phpunit --migrate-configuration || :'
       - run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml

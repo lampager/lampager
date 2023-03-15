@@ -1,8 +1,7 @@
 <?php
 
-namespace Lampager\Tests\Query\Conditions;
+namespace Lampager\Tests\Query;
 
-use Codeception\Specify;
 use Lampager\Exceptions\Query\CursorParameterException;
 use Lampager\Query\Condition;
 use Lampager\Query\ConditionGroup;
@@ -12,8 +11,6 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class WhereConditionsTest extends BaseTestCase
 {
-    use Specify;
-
     /**
      * @param  Order[] $orders
      * @return Order[]
@@ -424,5 +421,27 @@ class WhereConditionsTest extends BaseTestCase
         $this->assertNotSame($condition, $cloneCondition);
         $this->assertEquals($group, $cloneGroup);
         $this->assertNotSame($condition, $cloneCondition);
+    }
+
+
+    /**
+     * Polyfill for removed Codeception method
+     *
+     * @param string $name
+     * @param callable $fn
+     * @return void
+     */
+    private function specify($name, $fn)
+    {
+        try {
+            $fn();
+        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+        }
+
+        if (isset($e)) {
+            echo "Specified assertion failed: $name\n";
+            throw $e;
+        }
     }
 }

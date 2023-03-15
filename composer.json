@@ -26,7 +26,6 @@
     "require-dev": {
         "ext-json": "*",
         "phpunit/phpunit": ">=5.5",
-        "nilportugues/sql-query-formatter": "^1.2.2",
-        "codeception/specify": ">=0.4.6 <2.0"
+        "nilportugues/sql-query-formatter": "^1.2.2"
     }
 }
