@@ -8,10 +8,10 @@ jobs:
 
     strategy:
       matrix:
-        php: [5.6, '7.0', 7.1, 7.2, 7.3, 7.4, '8.0', 8.1]
+        php: [5.6, '7.0', 7.1, 7.2, 7.3, 7.4, '8.0', 8.1, 8.2]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -23,6 +23,7 @@ jobs:
       - run: composer require codeception/specify --dev --no-update
       - run: composer update
       - run: mkdir -p build/logs
+      - run: 'vendor/bin/phpunit --migrate-configuration || :'
       - run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
       - name: Upload Coverage
