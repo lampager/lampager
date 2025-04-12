@@ -5,13 +5,12 @@ namespace Lampager\Tests;
 use Lampager\Paginator;
 use Lampager\Query\Order;
 use Lampager\Query;
+use PHPUnit\Framework\Attributes\Test;
 
 class PaginatorTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function testOrderBy()
+    #[Test]
+    public function testOrderBy(): void
     {
         $paginator = new Paginator();
         $paginator->orderByDesc('foo');
@@ -29,10 +28,8 @@ class PaginatorTest extends TestCase
         $this->assertSame([], $paginator->orders, 'orders');
     }
 
-    /**
-     * @test
-     */
-    public function testLimit()
+    #[Test]
+    public function testLimit(): void
     {
         $paginator = new Paginator();
         $this->assertSame(15, $paginator->limit);
@@ -41,10 +38,8 @@ class PaginatorTest extends TestCase
         $this->assertSame(20, $paginator->limit);
     }
 
-    /**
-     * @test
-     */
-    public function testDirection()
+    #[Test]
+    public function testDirection(): void
     {
         $paginator = new Paginator();
         $this->assertFalse($paginator->backward);
@@ -62,10 +57,8 @@ class PaginatorTest extends TestCase
         $this->assertTrue($paginator->backward);
     }
 
-    /**
-     * @test
-     */
-    public function testInclusiveOrExclusive()
+    #[Test]
+    public function testInclusiveOrExclusive(): void
     {
         $paginator = new Paginator();
         $this->assertFalse($paginator->exclusive);
@@ -83,10 +76,8 @@ class PaginatorTest extends TestCase
         $this->assertTrue($paginator->exclusive);
     }
 
-    /**
-     * @test
-     */
-    public function testSeekableOrUnseekable()
+    #[Test]
+    public function testSeekableOrUnseekable(): void
     {
         $paginator = new Paginator();
         $this->assertFalse($paginator->seekable);
@@ -104,10 +95,8 @@ class PaginatorTest extends TestCase
         $this->assertTrue($paginator->seekable);
     }
 
-    /**
-     * @test
-     */
-    public function testFromArray()
+    #[Test]
+    public function testFromArray(): void
     {
         $paginator = new Paginator();
         $paginator->fromArray([
@@ -147,10 +136,8 @@ class PaginatorTest extends TestCase
         $this->assertTrue($paginator->seekable);
     }
 
-    /**
-     * @test
-     */
-    public function testConfigure()
+    #[Test]
+    public function testConfigure(): void
     {
         $paginator = new Paginator();
         $this->assertInstanceOf(Query::class, $paginator->orderBy('id')->configure(['id' => 1]));

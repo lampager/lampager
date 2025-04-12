@@ -2,15 +2,15 @@
 
 namespace Lampager\Tests\Query;
 
+use Lampager\Exceptions\Query\BadKeywordException;
 use Lampager\Query\Order;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class OrderTest extends BaseTestCase
 {
-    /**
-     * @test
-     */
-    public function testCreateMany()
+    #[Test]
+    public function testCreateMany(): void
     {
         $orders = Order::createMany([['created_at', Order::ASC], ['id', Order::DESC]]);
 
@@ -27,10 +27,8 @@ class OrderTest extends BaseTestCase
         $this->assertFalse($orders[1]->ascending());
     }
 
-    /**
-     * @test
-     */
-    public function testInverse()
+    #[Test]
+    public function testInverse(): void
     {
         $original = new Order('created_at', Order::ASC);
         $inverse = $original->inverse();
@@ -44,12 +42,10 @@ class OrderTest extends BaseTestCase
         $this->assertNotSame($original, $inverse);
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidDirection()
+    #[Test]
+    public function testInvalidDirection(): void
     {
-        $this->expectException(\Lampager\Exceptions\Query\BadKeywordException::class);
+        $this->expectException(BadKeywordException::class);
         $this->expectExceptionMessage('Order must be "asc", "ascending", "desc" or "descending"');
 
         new Order('id', 'ascccending');

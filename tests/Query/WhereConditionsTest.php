@@ -7,6 +7,7 @@ use Lampager\Query\Condition;
 use Lampager\Query\ConditionGroup;
 use Lampager\Query\Direction;
 use Lampager\Query\Order;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class WhereConditionsTest extends BaseTestCase
@@ -60,10 +61,8 @@ class WhereConditionsTest extends BaseTestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingForward()
+    #[Test]
+    public function testAscendingForward(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);
@@ -71,10 +70,8 @@ class WhereConditionsTest extends BaseTestCase
         $this->assertAscendingForwardOrDescendingBackwardExclusive($direction, $orders);
     }
 
-    /**
-     * @test
-     */
-    public function testAscendingBackward()
+    #[Test]
+    public function testAscendingBackward(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::BACKWARD);
@@ -82,10 +79,8 @@ class WhereConditionsTest extends BaseTestCase
         $this->assertAscendingBackwardOrDescendingForwardExclusive($direction, $orders);
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingForward()
+    #[Test]
+    public function testDescendingForward(): void
     {
         $orders = Order::createMany([['updated_at', Order::DESC], ['created_at', Order::DESC], ['id', Order::DESC]]);
         $direction = new Direction(Direction::FORWARD);
@@ -93,10 +88,8 @@ class WhereConditionsTest extends BaseTestCase
         $this->assertAscendingBackwardOrDescendingForwardExclusive($direction, $orders);
     }
 
-    /**
-     * @test
-     */
-    public function testDescendingBackward()
+    #[Test]
+    public function testDescendingBackward(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);
@@ -368,10 +361,8 @@ class WhereConditionsTest extends BaseTestCase
         });
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidComparatorForNonPrimaryKey()
+    #[Test]
+    public function testInvalidComparatorForNonPrimaryKey(): void
     {
         $this->expectException(\Lampager\Exceptions\Query\BadKeywordException::class);
         $this->expectExceptionMessage('Comparator for non-primary key condition must be "<", ">" or "="');
@@ -379,10 +370,8 @@ class WhereConditionsTest extends BaseTestCase
         new Condition('created_at', '<=', '2017-01-01 12:00:00');
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidComparatorForPrimaryKey()
+    #[Test]
+    public function testInvalidComparatorForPrimaryKey(): void
     {
         $this->expectException(\Lampager\Exceptions\Query\BadKeywordException::class);
         $this->expectExceptionMessage('Comparator for primary key condition must be "<", ">", "<=" or ">="');
@@ -390,10 +379,8 @@ class WhereConditionsTest extends BaseTestCase
         new Condition('id', '=', 10, true);
     }
 
-    /**
-     * @test
-     */
-    public function testMissingCursorParameter()
+    #[Test]
+    public function testMissingCursorParameter(): void
     {
         try {
             $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
@@ -406,10 +393,8 @@ class WhereConditionsTest extends BaseTestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function testDeepClone()
+    #[Test]
+    public function testDeepClone(): void
     {
         $condition = new Condition('id', '>=', 10, true);
         $group = new ConditionGroup([$condition]);
@@ -431,7 +416,7 @@ class WhereConditionsTest extends BaseTestCase
      * @param callable $fn
      * @return void
      */
-    private function specify($name, $fn)
+    private function specify($name, $fn): void
     {
         try {
             $fn();
