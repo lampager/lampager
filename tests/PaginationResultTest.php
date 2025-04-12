@@ -2,6 +2,8 @@
 
 namespace Lampager\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
+
 class PaginationResultTest extends TestCase
 {
     public static $rows = [
@@ -24,10 +26,8 @@ class PaginationResultTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testTraversedResultEqualsToRecords()
+    #[Test]
+    public function testTraversedResultEqualsToRecords(): void
     {
         $result = (new StubPaginator('posts'))
             ->forward()->limit(3)

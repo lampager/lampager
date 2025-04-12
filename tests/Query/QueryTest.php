@@ -3,18 +3,19 @@
 namespace Lampager\Tests\Query;
 
 use Lampager\ArrayCursor;
+use Lampager\Exceptions\InvalidArgumentException;
+use Lampager\Exceptions\Query\InsufficientConstraintsException;
 use Lampager\Query\Direction;
 use Lampager\Query\Order;
 use Lampager\Query;
 use Lampager\Query\SelectOrUnionAll;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class QueryTest extends BaseTestCase
 {
-    /**
-     * @test
-     */
-    public function testConstruction()
+    #[Test]
+    public function testConstruction(): void
     {
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
         $cursor = new ArrayCursor(['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00']);
@@ -42,10 +43,8 @@ class QueryTest extends BaseTestCase
         $this->assertSame($builder, $query->builder());
     }
 
-    /**
-     * @test
-     */
-    public function testDeepClone()
+    #[Test]
+    public function testDeepClone(): void
     {
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
         $cursor = ['id' => 10, 'created_at' => '2017-01-01 12:00:00', 'updated_at' => '2017-01-01 18:00:00'];
@@ -67,12 +66,10 @@ class QueryTest extends BaseTestCase
         $this->assertNotSame($query->direction(), $cloneDirection);
     }
 
-    /**
-     * @test
-     */
-    public function testEmptyConstraints()
+    #[Test]
+    public function testEmptyConstraints(): void
     {
-        $this->expectException(\Lampager\Exceptions\Query\InsufficientConstraintsException::class);
+        $this->expectException(InsufficientConstraintsException::class);
         $this->expectExceptionMessage('At least one order constraint required');
 
         $orders = [];
@@ -86,12 +83,10 @@ class QueryTest extends BaseTestCase
         Query::create($orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder);
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidCursor()
+    #[Test]
+    public function testInvalidCursor(): void
     {
-        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Cursor must be either Cursor or array');
 
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
@@ -105,12 +100,10 @@ class QueryTest extends BaseTestCase
         Query::create($orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder);
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidDirection()
+    #[Test]
+    public function testInvalidDirection(): void
     {
-        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Direction must be bool');
 
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
@@ -124,12 +117,10 @@ class QueryTest extends BaseTestCase
         Query::create($orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder);
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidExclusive()
+    #[Test]
+    public function testInvalidExclusive(): void
     {
-        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Exclusive must be bool');
 
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];
@@ -143,12 +134,10 @@ class QueryTest extends BaseTestCase
         Query::create($orders, $cursor, $limit, $backward, $exclusive, $seekable, $builder);
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidSeekable()
+    #[Test]
+    public function testInvalidSeekable(): void
     {
-        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Seekable must be bool');
 
         $orders = [['updated_at', Order::ASC], ['created_at', Order::DESC], ['id', Order::ASC]];

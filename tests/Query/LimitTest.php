@@ -2,32 +2,31 @@
 
 namespace Lampager\Tests\Query;
 
+use Lampager\Exceptions\Query\LimitParameterException;
 use Lampager\Query\Limit;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class LimitTest extends BaseTestCase
 {
-    /**
-     * @test
-     */
-    public function testMainQuery()
+    #[Test]
+    public function testMainQuery(): void
     {
         $limit = new Limit(10);
         $this->assertMainQuery($limit);
         $this->assertSupportQuery($limit->inverse());
     }
 
-    /**
-     * @test
-     */
-    public function testSupportQuery()
+    #[Test]
+    public function testSupportQuery(): void
     {
         $limit = new Limit(10, true);
         $this->assertSupportQuery($limit);
         $this->assertMainQuery($limit->inverse());
     }
 
-    protected function assertMainQuery(Limit $limit)
+    #[Test]
+    protected function assertMainQuery(Limit $limit): void
     {
         $intValue = $limit->toInteger();
         $original = $limit->original();
@@ -37,7 +36,8 @@ class LimitTest extends BaseTestCase
         $this->assertSame($original + 1, $intValue);
     }
 
-    protected function assertSupportQuery(Limit $limit)
+    #[Test]
+    protected function assertSupportQuery(Limit $limit): void
     {
         $intValue = $limit->toInteger();
 
@@ -46,32 +46,26 @@ class LimitTest extends BaseTestCase
         $this->assertSame(1, $intValue);
     }
 
-    /**
-     * @test
-     */
-    public function testInverseIsCloned()
+    #[Test]
+    public function testInverseIsCloned(): void
     {
         $limit = new Limit(10);
         $this->assertNotSame($limit, $limit->inverse());
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidLimitType()
+    #[Test]
+    public function testInvalidLimitType(): void
     {
-        $this->expectException(\Lampager\Exceptions\Query\LimitParameterException::class);
+        $this->expectException(LimitParameterException::class);
         $this->expectExceptionMessage('Limit must be integer');
 
         new Limit('foo');
     }
 
-    /**
-     * @test
-     */
-    public function testInvalidLimitRange()
+    #[Test]
+    public function testInvalidLimitRange(): void
     {
-        $this->expectException(\Lampager\Exceptions\Query\LimitParameterException::class);
+        $this->expectException(LimitParameterException::class);
         $this->expectExceptionMessage('Limit must be positive integer');
 
         new Limit(0);

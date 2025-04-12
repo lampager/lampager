@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [5.6, '7.0', 7.1, 7.2, 7.3, 7.4, '8.0', 8.1, 8.2]
+        php: [8.2, 8.3, 8.4]
 
     steps:
       - uses: actions/checkout@v3
@@ -19,9 +19,8 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: xdebug
 
-      - run: composer install
+      - run: composer update
       - run: mkdir -p build/logs
-      - run: 'vendor/bin/phpunit --migrate-configuration || :'
       - run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
       - name: Upload Coverage

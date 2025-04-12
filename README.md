@@ -4,7 +4,6 @@
 <p align="center">
 <a href="https://github.com/lampager/lampager/actions"><img src="https://github.com/lampager/lampager/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/github/lampager/lampager?branch=master"><img src="https://coveralls.io/repos/github/lampager/lampager/badge.svg?branch=master" alt="Coverage Status"></a>
-<a href="https://scrutinizer-ci.com/g/lampager/lampager/?branch=master"><img src="https://scrutinizer-ci.com/g/lampager/lampager/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
 </p>
 
 # Lampager Core
@@ -13,7 +12,10 @@ The core package of Lampager
 
 ## Requirements
 
-- PHP: `^5.6 || ^7.0 || ^8.0`
+- PHP: `^8.2`
+
+> [!NOTE]
+> Older versions have outdated dependency requirements. If you cannot prepare the latest environment, please refer to past releases.
 
 ## Installing
 

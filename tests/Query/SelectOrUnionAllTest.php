@@ -8,14 +8,13 @@ use Lampager\Query\Order;
 use Lampager\Query\Select;
 use Lampager\Query\SelectOrUnionAll;
 use Lampager\Query\UnionAll;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 class SelectOrUnionAllTest extends BaseTestCase
 {
-    /**
-     * @test
-     */
-    public function testAlwaysCreateSelectForEmptyCursor()
+    #[Test]
+    public function testAlwaysCreateSelectForEmptyCursor(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);
@@ -27,10 +26,8 @@ class SelectOrUnionAllTest extends BaseTestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function testCreateSelectWhenUnseekable()
+    #[Test]
+    public function testCreateSelectWhenUnseekable(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);
@@ -40,10 +37,8 @@ class SelectOrUnionAllTest extends BaseTestCase
         $this->assertInstanceOf(Select::class, $select);
     }
 
-    /**
-     * @test
-     */
-    public function testCreateUnionAllWhenSeekable()
+    #[Test]
+    public function testCreateUnionAllWhenSeekable(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);
@@ -53,10 +48,8 @@ class SelectOrUnionAllTest extends BaseTestCase
         $this->assertInstanceOf(UnionAll::class, $unionAll);
     }
 
-    /**
-     * @test
-     */
-    public function testOrderInvertedOnBackward()
+    #[Test]
+    public function testOrderInvertedOnBackward(): void
     {
         foreach ([Order::ASC, Order::DESC] as $order) {
             $sourceOrders = Order::createMany([['updated_at', $order], ['created_at', $order], ['id', $order]]);
@@ -70,10 +63,8 @@ class SelectOrUnionAllTest extends BaseTestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function testOrderNotInvertedOnForward()
+    #[Test]
+    public function testOrderNotInvertedOnForward(): void
     {
         foreach ([Order::ASC, Order::DESC] as $order) {
             $sourceOrders = Order::createMany([['updated_at', $order], ['created_at', $order], ['id', $order]]);
@@ -87,10 +78,8 @@ class SelectOrUnionAllTest extends BaseTestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function testSelectIteratesItself()
+    #[Test]
+    public function testSelectIteratesItself(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);
@@ -103,10 +92,8 @@ class SelectOrUnionAllTest extends BaseTestCase
         $this->assertFalse($it->valid());
     }
 
-    /**
-     * @test
-     */
-    public function testUnionAllIteratesSupportAndMainQueriesInThisOrder()
+    #[Test]
+    public function testUnionAllIteratesSupportAndMainQueriesInThisOrder(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);
@@ -121,10 +108,8 @@ class SelectOrUnionAllTest extends BaseTestCase
         $this->assertFalse($it->valid());
     }
 
-    /**
-     * @test
-     */
-    public function testSupportQueryInvertedOnUnionAll()
+    #[Test]
+    public function testSupportQueryInvertedOnUnionAll(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);
@@ -143,10 +128,8 @@ class SelectOrUnionAllTest extends BaseTestCase
         $this->assertNotSame($mainQuery->where()[0]->conditions()[2]->comparator(), $supportQuery->where()[0]->conditions()[2]->comparator());
     }
 
-    /**
-     * @test
-     */
-    public function testDeepClone()
+    #[Test]
+    public function testDeepClone(): void
     {
         $orders = Order::createMany([['updated_at', Order::ASC], ['created_at', Order::ASC], ['id', Order::ASC]]);
         $direction = new Direction(Direction::FORWARD);

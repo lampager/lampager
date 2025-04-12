@@ -3,24 +3,22 @@
 namespace Lampager\Tests;
 
 use Lampager\ArrayProcessor;
+use Lampager\Exceptions\InvalidArgumentException;
 use Lampager\PaginationResult;
 use Lampager\Query;
+use PHPUnit\Framework\Attributes\Test;
 
 class FormatterTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function defaultFormatter()
+    #[Test]
+    public function defaultFormatter(): void
     {
         $result = (new StubPaginator('posts'))->orderBy('id')->useProcessor(CustomStubProcessor::class)->paginate();
         $this->assertSame(['This is dummy'], $result);
     }
 
-    /**
-     * @test
-     */
-    public function testStaticCustomFormatter()
+    #[Test]
+    public function testStaticCustomFormatter(): void
     {
         try {
             ArrayProcessor::setDefaultFormatter(function ($rows, $meta, Query $query) {
@@ -34,10 +32,8 @@ class FormatterTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function testInstanceCustomFormatter()
+    #[Test]
+    public function testInstanceCustomFormatter(): void
     {
         $paginator = new StubPaginator('posts');
         try {
@@ -51,10 +47,8 @@ class FormatterTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function testFormatBehavesPriorToInvoke()
+    #[Test]
+    public function testFormatBehavesPriorToInvoke(): void
     {
         $paginator = new StubPaginator('posts');
         try {
@@ -65,22 +59,18 @@ class FormatterTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function invalidFormatter()
+    #[Test]
+    public function invalidFormatter(): void
     {
-        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         (new StubPaginator('posts'))->useProcessor(function () {});
     }
 
-    /**
-     * @test
-     */
-    public function invalidProcessor()
+    #[Test]
+    public function invalidProcessor(): void
     {
-        $this->expectException(\Lampager\Exceptions\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         (new StubPaginator('posts'))->useFormatter(__CLASS__);
     }

@@ -138,6 +138,7 @@ class ConditionGroup implements \IteratorAggregate
      *
      * @return \ArrayIterator|Condition[]
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->conditions);

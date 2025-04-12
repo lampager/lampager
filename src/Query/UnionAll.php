@@ -58,6 +58,7 @@ class UnionAll extends SelectOrUnionAll implements \IteratorAggregate
      *
      * @return \ArrayIterator|Select[]
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator([$this->mainQuery, $this->supportQuery]);

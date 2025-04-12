@@ -104,6 +104,7 @@ class Select extends SelectOrUnionAll
      *
      * @return \ArrayIterator|Select[]
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator([$this]);
